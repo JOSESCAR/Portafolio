@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Future of Payments — Neo UI</title>
+<title>Neo UI — Islands</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -22,131 +22,117 @@ body{
     linear-gradient(var(--bg),var(--bg2));
   overflow:hidden;
 }
-.frame{
-  position:fixed; inset:24px; border-radius:28px; overflow:hidden;
+.frame{position:fixed; inset:24px; border-radius:28px; overflow:hidden;
   background:rgba(6,10,20,.6); border:1px solid rgba(255,255,255,.08);
   box-shadow:0 40px 120px rgba(0,0,0,.55) inset, 0 10px 60px rgba(0,0,0,.55);
 }
 
-/* Utilidad de vidrio con fallback */
-.glass{ background:rgba(255,255,255,.08); border:1px solid var(--stroke)}
-@supports ((-webkit-backdrop-filter:blur(10px)) or (backdrop-filter:blur(10px))){
-  .glass{ background:var(--glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
+/* --------- GLASS + ISLAS --------- */
+.glass{background:rgba(255,255,255,.08); border:1px solid var(--stroke)}
+@supports((backdrop-filter:blur(10px)) or (-webkit-backdrop-filter:blur(10px))){
+  .glass{-webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); background:var(--glass)}
 }
+.island{
+  position:absolute; display:flex; align-items:center; gap:10px;
+  padding:10px; border-radius:20px; box-shadow:0 12px 40px rgba(0,0,0,.35);
+  animation:floaty 6s ease-in-out infinite;
+}
+.island.small{padding:8px 10px; border-radius:18px}
+@keyframes floaty{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+.island:hover{transform:translateY(-4px); transition:.25s ease}
 
-/* Top layer shapes */
-.topbar{ position:absolute; left:24px; right:24px; top:18px; height:68px; z-index:10; }
-.shape-left{
-  position:absolute; left:0; top:0; width:540px; height:140px; z-index:1;
-  border-radius:24px 80px 80px 24px; /* curva suave tipo “burbuja” */
-}
-.shape-right{
-  position:absolute; right:0; top:0; width:560px; height:200px; z-index:1;
-  border-radius:80px 24px 24px 80px;
-}
+/* islas ubicaciones */
+.island.top-left{ top:18px; left:24px; }
+.island.top-right{ top:18px; right:24px; }
+.island.bottom-left{ bottom:18px; left:24px; }
 
-/* Top content */
-.top-content{position:relative; display:flex; align-items:center; justify-content:space-between; height:68px; z-index:2;}
-.left{
-  display:flex; align-items:center; gap:12px;
-}
-.logo{ width:42px; height:42px; border-radius:14px; display:grid; place-items:center; font-weight:900 }
+/* Contenido de islas */
+.logo{ width:36px; height:36px; border-radius:12px; display:grid; place-items:center; font-weight:900 }
 .pill{ padding:10px 16px; border-radius:999px; font-weight:600; font-size:14px }
 .pill.active{ background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06)); }
 
-.right{
-  display:flex; align-items:center; gap:8px;
-}
-.icon{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center }
-.icon svg{ width:18px; height:18px; fill:var(--muted) }
+.icon{ width:34px; height:34px; border-radius:50%; display:grid; place-items:center }
+.icon svg{ width:16px; height:16px; fill:var(--muted) }
 .cta{ padding:10px 16px; border-radius:999px; border:0; cursor:pointer; color:#07111f; font-weight:800;
   background:linear-gradient(90deg,var(--accent),var(--accent2)); box-shadow:0 6px 28px rgba(34,211,238,.35); }
 
-/* Grid lines */
-.grid{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:.13;
+.search{ min-width:520px; max-width:60vw; padding:12px 16px; border-radius:999px; color:var(--muted); font-size:14px }
+.go{ width:42px; height:42px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#07111f;
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); border:1px solid var(--stroke) }
+.chip{ padding:10px 14px; border-radius:999px; font-size:12px; font-weight:600; color:var(--muted) }
+
+/* --------- GRID + HERO --------- */
+.grid{position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.12;
   background:
     linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/560px 100%,
     linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/100% 420px;
 }
-
-/* Hero */
-.hero{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none }
-h1{ margin:0; line-height:.92; font-size:clamp(38px,6.5vw,90px); font-weight:900; text-transform:uppercase; letter-spacing:.5px;
+.hero{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:2; pointer-events:none }
+h1{ margin:0; line-height:.92; font-size:clamp(36px,6.3vw,88px); font-weight:900; text-transform:uppercase; letter-spacing:.6px;
   text-shadow:0 8px 40px rgba(0,0,0,.6); }
 .sub{ margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted) }
 
-/* Right widget */
-.widget{ position:absolute; right:28px; bottom:110px; width:280px; z-index:6; border-radius:18px; padding:16px }
-.widget h3{ margin:0 0 8px 0; font-size:14px; font-weight:700}
-.progress{ position:relative; width:100%; aspect-ratio:1/1; border-radius:16px; display:grid; place-items:center; margin-top:6px }
-.ring{ position:absolute; inset:12px; border-radius:50%;
-  background:conic-gradient(var(--accent2) var(--p,25%), rgba(255,255,255,.08) 0);
-  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
-          mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
+/* --------- WIDGET --------- */
+.widget{ position:absolute; right:28px; bottom:110px; width:260px; z-index:2; border-radius:16px; padding:14px }
+.widget h3{ margin:0 0 8px 0; font-size:13px; font-weight:700}
+.progress{ position:relative; width:100%; aspect-ratio:1/1; border-radius:14px; display:grid; place-items:center; margin-top:6px }
+.ring{ position:absolute; inset:10px; border-radius:50%;
+  background:conic-gradient(var(--accent2) var(--p,56%), rgba(255,255,255,.08) 0);
+  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 12px), #000 0);
+          mask:radial-gradient(farthest-side, transparent calc(100% - 12px), #000 0);
 }
-.value{ font-weight:800; font-size:28px}
-.cta-sm{ margin-top:12px; width:100%; padding:10px 14px; border-radius:12px; border:0; cursor:pointer; color:#07111f; font-weight:800;
+.value{ font-weight:800; font-size:26px}
+.cta-sm{ margin-top:10px; width:100%; padding:10px 12px; border-radius:12px; border:0; cursor:pointer; color:#07111f; font-weight:800;
   background:linear-gradient(90deg,var(--accent),var(--accent2)); }
 
-/* Bottom rail + search */
-.bottom-rail{ position:absolute; left:0; right:0; bottom:0; height:120px; z-index:3; border-top:1px solid var(--stroke) }
-.lens{ position:absolute; left:20px; bottom:94px; z-index:7; opacity:.9; color:var(--muted) }
-.bottom{ position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:8; display:flex; align-items:center; gap:12px }
-.search{ flex:1; padding:14px 16px; border-radius:999px; font-size:14px; color:var(--muted) }
-.go{ width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#07111f;
-  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); border:1px solid var(--stroke) }
-.chips{ display:flex; gap:8px }
-.chip{ padding:10px 14px; border-radius:999px; font-size:12px; font-weight:600; color:var(--muted) }
-
-/* Apply .glass to components */
-.shape-left,.shape-right,.logo,.pill,.icon,.search,.widget,.bottom-rail,.top-fill,.right-fill{ composes: glass; }
-.logo,.pill,.icon,.widget,.search{ background:var(--glass) }
-
-/* Canvas 3D */
-#bg{ position:absolute; inset:0; width:100%; height:100%; z-index:1 }
+/* --------- CANVAS 3D --------- */
+#bg{ position:absolute; inset:0; width:100%; height:100%; z-index:0 }
 
 @media (max-width:960px){
   .frame{ inset:12px }
-  .shape-left,.shape-right{ display:none }
-  .widget{ right:18px; bottom:96px; width:240px }
+  .island.bottom-left .search{ min-width:0; width:56vw }
+  .widget{ right:18px; bottom:96px; width:220px }
 }
 </style>
 </head>
 <body>
 <div class="frame">
-  <!-- “plafones” -->
-  <div class="shape-left glass"></div>
-  <div class="shape-right glass"></div>
+  <!-- ISLA TOP-LEFT -->
+  <div class="island glass top-left">
+    <div class="logo glass">FP</div>
+    <button class="pill glass active">Home</button>
+    <button class="pill glass">About</button>
+    <button class="pill glass">Services</button>
+  </div>
 
-  <!-- Topbar -->
-  <div class="topbar">
-    <div class="top-content">
-      <div class="left">
-        <div class="logo glass">FP</div>
-        <button class="pill glass">Home</button>
-        <button class="pill glass">About</button>
-        <button class="pill glass">Services</button>
-      </div>
-      <div class="right">
-        <a class="icon glass" href="#" aria-label="X">
-          <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
-        </a>
-        <a class="icon glass" href="#" aria-label="IG">
-          <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.25-2.5a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
-        </a>
-        <a class="icon glass" href="#" aria-label="In">
-          <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
-        </a>
-        <a class="cta" href="#signup">JOIN NOW →</a>
-      </div>
-    </div>
+  <!-- ISLA TOP-RIGHT -->
+  <div class="island glass top-right small" style="gap:8px;">
+    <a class="icon glass" href="#" aria-label="X">
+      <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
+    </a>
+    <a class="icon glass" href="#" aria-label="IG">
+      <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.25-2.5a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+    </a>
+    <a class="icon glass" href="#" aria-label="In">
+      <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
+    </a>
+    <a class="cta" href="#signup">JOIN NOW →</a>
+  </div>
+
+  <!-- ISLA BOTTOM-LEFT (buscador) -->
+  <div class="island glass bottom-left" style="gap:12px;">
+    <div class="icon glass" aria-hidden="true">🔍</div>
+    <div class="search glass">Experience seamless transactions and cutting-edge security in the palm of your hand</div>
+    <div class="go">➜</div>
+    <a class="chip glass" href="#">PRIVACY</a>
+    <a class="chip glass" href="#">TERMS</a>
   </div>
 
   <!-- 3D + grid -->
   <canvas id="bg" aria-hidden="true"></canvas>
   <div class="grid" aria-hidden="true"></div>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
     <div>
       <h1>WELCOME TO THE<br>FUTURE OF PAYMENTS</h1>
@@ -154,33 +140,20 @@ h1{ margin:0; line-height:.92; font-size:clamp(38px,6.5vw,90px); font-weight:900
     </div>
   </section>
 
-  <!-- Widget -->
+  <!-- WIDGET -->
   <aside class="widget glass" id="signup">
     <h3>Join the Revolution</h3>
     <div class="progress glass">
-      <div class="ring" id="ring" style="--p:25%"></div>
-      <div class="value" id="val">25%</div>
+      <div class="ring" id="ring" style="--p:56%"></div>
+      <div class="value" id="val">56%</div>
     </div>
     <button class="cta-sm">SIGN UP</button>
   </aside>
-
-  <!-- Bottom rail + search -->
-  <div class="bottom-rail glass" aria-hidden="true"></div>
-  <div class="lens">🔍</div>
-  <div class="bottom">
-    <div class="search glass">Experience seamless transactions and cutting-edge security in the palm of your hand</div>
-    <div class="go">➜</div>
-    <div class="chips">
-      <a class="chip glass" href="#">PRIVACY</a>
-      <a class="chip glass" href="#">TERMS</a>
-    </div>
-  </div>
 </div>
 
 <!-- 3D -->
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-
 const canvas = document.getElementById('bg');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -188,77 +161,59 @@ renderer.setSize(innerWidth, innerHeight);
 
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x0a0f1d, 0.02);
-
 const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 200);
-camera.position.set(0, 0.8, 6);
-scene.add(camera);
+camera.position.set(0,0.8,6); scene.add(camera);
 
-// luces
-scene.add(new THREE.AmbientLight(0x99bbff, .35));
-const key = new THREE.DirectionalLight(0xaaddff, 0.9); key.position.set(2,4,3); scene.add(key);
+scene.add(new THREE.AmbientLight(0x99bbff,.35));
+const key = new THREE.DirectionalLight(0xaaddff,.9); key.position.set(2,4,3); scene.add(key);
 
-// grupo roca + glow (más limpio)
 const group = new THREE.Group(); scene.add(group);
 const rock = new THREE.Mesh(
-  new THREE.IcosahedronGeometry(1.7, 3),
-  new THREE.MeshStandardMaterial({ color:0x0f152a, metalness:.65, roughness:.38 })
-);
-group.add(rock);
+  new THREE.IcosahedronGeometry(1.7,3),
+  new THREE.MeshStandardMaterial({color:0x0f152a,metalness:.65,roughness:.38})
+); group.add(rock);
 
-// puntos glow más pequeños y pocos
-const glowMat = new THREE.MeshBasicMaterial({ color:0x7ee0ff });
+const glowMat = new THREE.MeshBasicMaterial({color:0x7ee0ff});
 for(let i=0;i<12;i++){
-  const s = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), glowMat);
-  const r = 1.45 + Math.random()*0.5;
-  const a = Math.random()*Math.PI*2, b = (Math.random()*Math.PI)-Math.PI/2;
+  const s=new THREE.Mesh(new THREE.SphereGeometry(0.045,16,16),glowMat);
+  const r=1.45+Math.random()*0.5; const a=Math.random()*Math.PI*2; const b=(Math.random()*Math.PI)-Math.PI/2;
   s.position.set(Math.cos(a)*Math.cos(b)*r, Math.sin(b)*r, Math.sin(a)*Math.cos(b)*r);
   group.add(s);
 }
 
-// plano tenue para profundidad
-const plane = new THREE.Mesh(
-  new THREE.PlaneGeometry(40, 20),
-  new THREE.MeshBasicMaterial({ color:0x0b1328, transparent:true, opacity:.45 })
+const plane=new THREE.Mesh(
+  new THREE.PlaneGeometry(40,20),
+  new THREE.MeshBasicMaterial({color:0x0b1328,transparent:true,opacity:.45})
 );
-plane.rotation.x = -Math.PI/2.2; plane.position.y = -2.2; plane.position.z = -2;
-scene.add(plane);
+plane.rotation.x=-Math.PI/2.2; plane.position.y=-2.2; plane.position.z=-2; scene.add(plane);
 
-// responsive
-addEventListener('resize', ()=>{
-  renderer.setSize(innerWidth, innerHeight);
-  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
-});
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();});
 
-// animación con wobble suave
-const pos = rock.geometry.attributes.position;
-const base = pos.array.slice();
+const pos=rock.geometry.attributes.position; const base=pos.array.slice();
 function wobble(t){
   for(let i=0;i<pos.count;i++){
-    const ix=i*3, iy=ix+1, iz=ix+2;
-    const x=base[ix], y=base[iy], z=base[iz];
-    const n = Math.sin(x*1.6 + t*.8) + Math.sin(y*1.25 + t*1.05) + Math.sin(z*1.4 + t*.65);
-    const f = 1 + n*0.045; // menos deformación
+    const ix=i*3,iy=ix+1,iz=ix+2;
+    const x=base[ix],y=base[iy],z=base[iz];
+    const n=Math.sin(x*1.6+t*.8)+Math.sin(y*1.25+t*1.05)+Math.sin(z*1.4+t*.65);
+    const f=1+n*0.045;
     pos.array[ix]=x*f; pos.array[iy]=y*f; pos.array[iz]=z*f;
   }
   pos.needsUpdate=true; rock.geometry.computeVertexNormals();
 }
-let t0 = performance.now();
-function loop(now){
-  const t = (now - t0)/1000;
+let t0=performance.now();
+(function loop(now){
+  const t=(now-t0)/1000;
   wobble(t);
-  group.rotation.y = t*0.22;
-  group.rotation.x = Math.sin(t*0.55)*0.09;
-  group.position.y = Math.sin(t*0.85)*0.22;
-  renderer.render(scene, camera);
+  group.rotation.y=t*0.22;
+  group.rotation.x=Math.sin(t*0.55)*0.09;
+  group.position.y=Math.sin(t*0.85)*0.22;
+  renderer.render(scene,camera);
   requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
+})(t0);
 
 // progreso
-const ring = document.getElementById('ring');
-const val  = document.getElementById('val');
-let p = 25;
-setInterval(()=>{ p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%'; }, 120);
+const ring=document.getElementById('ring'); const val=document.getElementById('val'); let p=56;
+setInterval(()=>{p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%';},120);
 </script>
 </body>
 </html>

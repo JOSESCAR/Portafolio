@@ -3,274 +3,262 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Future Pay — Landing</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<title>Future of Payments — Neo UI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b1220; --fg:#e7ecf7; --muted:#b2bed6;
-  --accent:#7ee0ff; --accent2:#22d3ee;
+  --bg:#0b1220; --bg2:#0a0f1d;
+  --fg:#eaf0fb; --muted:#b6c3da;
   --glass:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.14);
+  --accent:#7ee0ff; --accent2:#22d3ee;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg);
+  margin:0; color:var(--fg); font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;
   background:
-    radial-gradient(1200px 800px at 20% -10%, #243a6b 0%, transparent 60%),
-    radial-gradient(1000px 600px at 90% 10%, #15304f 0%, transparent 55%),
-    linear-gradient(#0b1220,#0a0f1d);
+    radial-gradient(1200px 800px at 20% -10%, #223762 0%, transparent 60%),
+    radial-gradient(1000px 600px at 90% 10%, #143150 0%, transparent 55%),
+    linear-gradient(var(--bg),var(--bg2));
   overflow:hidden;
 }
-
-/* Marco */
-.frame{position:fixed; inset:24px; border-radius:28px; overflow:hidden;
-  background:rgba(6,10,20,.65); border:1px solid rgba(255,255,255,.08);
+.frame{
+  position:fixed; inset:24px; border-radius:28px; overflow:hidden;
+  background:rgba(6,10,20,.6); border:1px solid rgba(255,255,255,.08);
   box-shadow:0 40px 120px rgba(0,0,0,.55) inset, 0 10px 60px rgba(0,0,0,.55);
 }
 
-/* Líneas guía */
-.grid-lines{
-  position:absolute; inset:0; pointer-events:none; z-index:2; opacity:.15;
-  background:
-    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 560px 100%,
-    linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 100% 420px;
+/* Utilidad de vidrio con fallback */
+.glass{ background:rgba(255,255,255,.08); border:1px solid var(--stroke)}
+@supports ((-webkit-backdrop-filter:blur(10px)) or (backdrop-filter:blur(10px))){
+  .glass{ background:var(--glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
 }
 
-/* --- TOP BAR --- */
-.top{position:absolute; left:24px; right:24px; top:18px; height:64px; z-index:12;}
-
-/* plafón superior izquierdo (lo que faltaba) */
-.top-cloud-left{
-  position:absolute; top:-6px; left:0; width:520px; height:120px; z-index:3;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  border-radius:20px;
-  clip-path: path("M12,20 H360 C430,20 480,40 500,70 C515,95 510,112 480,112 H20 C10,112 4,106 4,96 V32 C4,24 8,20 12,20 Z");
+/* Top layer shapes */
+.topbar{ position:absolute; left:24px; right:24px; top:18px; height:68px; z-index:10; }
+.shape-left{
+  position:absolute; left:0; top:0; width:540px; height:140px; z-index:1;
+  border-radius:24px 80px 80px 24px; /* curva suave tipo “burbuja” */
+}
+.shape-right{
+  position:absolute; right:0; top:0; width:560px; height:200px; z-index:1;
+  border-radius:80px 24px 24px 80px;
 }
 
-/* grupo izq (logo + pills) */
-.left-wrap{position:relative; display:flex; gap:12px; align-items:center; z-index:4}
-.logo{
-  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  font-weight:900;
-}
-.nav{display:flex; gap:10px}
-.pill{
-  padding:10px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  color:var(--fg); font-weight:600; font-size:14px;
-}
-.pill.active{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
-
-/* grupo der con plafón encajado (lo que faltaba) */
-.right-wrap{position:absolute; top:0; right:0; height:64px; display:flex; align-items:center;}
-.right-shell{
-  position:relative; display:flex; align-items:center; gap:8px; padding:8px 8px 8px 10px; z-index:4;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  border-radius:999px;
-}
-/* gran plafón de fondo que “baja” por la derecha */
-.right-cloud{
-  position:absolute; top:-8px; right:-8px; width:520px; height:210px; z-index:3;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  border-radius:22px;
-  clip-path: path("M200,0 H480 C492,0 504,8 504,20 V170 C504,188 490,202 472,202 H220 C120,202 90,160 80,120 C70,78 92,40 140,24 C165,16 182,10 200,0 Z");
-}
-.icon{
-  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid var(--stroke); background:rgba(255,255,255,.04);
-}
-.icon svg{width:18px;height:18px;fill:var(--muted)}
-.cta{
-  padding:10px 16px;border-radius:999px;border:0;cursor:pointer;
-  color:#06111f;font-weight:800;letter-spacing:.3px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  box-shadow:0 6px 28px rgba(34,211,238,.35);
-}
-
-/* HERO */
-.hero{position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none}
-h1{margin:0; line-height:.92; font-size:clamp(38px,6.4vw,88px); font-weight:900; text-transform:uppercase}
-.sub{margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted)}
-
-/* Canvas 3D */
-canvas#bg{position:absolute; inset:0; width:100%; height:100%; z-index:1}
-
-/* WIDGET DERECHO */
-.widget{
-  position:absolute; right:28px; bottom:110px; width:280px; z-index:9;
-  background:var(--glass); border:1px solid var(--stroke); border-radius:18px; padding:16px;
-  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
-}
-.widget h3{margin:0 0 6px 0; font-size:14px; font-weight:700}
-.progress{width:100%; aspect-ratio:1/1; border-radius:16px; margin-top:8px;
-  display:grid; place-items:center; position:relative; overflow:hidden;
-  background:radial-gradient(closest-side, rgba(126,224,255,.14), transparent 65%),
-             linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  border:1px solid var(--stroke);
-}
-.ring{position:absolute; inset:12px; border-radius:50%;
-  background:conic-gradient(var(--accent2) var(--p,35%), rgba(255,255,255,.08) 0);
-  mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
-}
-.value{font-weight:800; font-size:28px}
-.cta-sm{margin-top:12px; width:100%; padding:10px 14px; border-radius:12px; border:0; cursor:pointer;
-  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#06111f; font-weight:800}
-
-/* --- RIEL INFERIOR (lo que faltaba) --- */
-.footer-rail{
-  position:absolute; left:0; right:0; bottom:0; height:120px; z-index:3;
-  background:var(--glass); border-top:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-}
-/* lupa suelta */
-.float-lens{
-  position:absolute; left:22px; bottom:92px; width:28px; height:28px; z-index:11;
-  display:grid; place-items:center; color:var(--muted); opacity:.9;
-}
-
-/* barra inferior original (search pill + chips) */
-.bottom-bar{
-  position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:12;
+/* Top content */
+.top-content{position:relative; display:flex; align-items:center; justify-content:space-between; height:68px; z-index:2;}
+.left{
   display:flex; align-items:center; gap:12px;
 }
-.search{
-  flex:1; display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:999px;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  color:var(--muted); font-size:14px;
-}
-.go{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid var(--stroke);
-  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); color:#06111f; font-weight:900
-}
-.mini{display:flex; gap:8px}
-.chip{padding:10px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--stroke); color:var(--muted); font-size:12px; font-weight:600}
+.logo{ width:42px; height:42px; border-radius:14px; display:grid; place-items:center; font-weight:900 }
+.pill{ padding:10px 16px; border-radius:999px; font-weight:600; font-size:14px }
+.pill.active{ background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06)); }
 
-/* RESPONSIVE */
+.right{
+  display:flex; align-items:center; gap:8px;
+}
+.icon{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center }
+.icon svg{ width:18px; height:18px; fill:var(--muted) }
+.cta{ padding:10px 16px; border-radius:999px; border:0; cursor:pointer; color:#07111f; font-weight:800;
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); box-shadow:0 6px 28px rgba(34,211,238,.35); }
+
+/* Grid lines */
+.grid{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:.13;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/560px 100%,
+    linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/100% 420px;
+}
+
+/* Hero */
+.hero{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none }
+h1{ margin:0; line-height:.92; font-size:clamp(38px,6.5vw,90px); font-weight:900; text-transform:uppercase; letter-spacing:.5px;
+  text-shadow:0 8px 40px rgba(0,0,0,.6); }
+.sub{ margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted) }
+
+/* Right widget */
+.widget{ position:absolute; right:28px; bottom:110px; width:280px; z-index:6; border-radius:18px; padding:16px }
+.widget h3{ margin:0 0 8px 0; font-size:14px; font-weight:700}
+.progress{ position:relative; width:100%; aspect-ratio:1/1; border-radius:16px; display:grid; place-items:center; margin-top:6px }
+.ring{ position:absolute; inset:12px; border-radius:50%;
+  background:conic-gradient(var(--accent2) var(--p,25%), rgba(255,255,255,.08) 0);
+  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
+          mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
+}
+.value{ font-weight:800; font-size:28px}
+.cta-sm{ margin-top:12px; width:100%; padding:10px 14px; border-radius:12px; border:0; cursor:pointer; color:#07111f; font-weight:800;
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+
+/* Bottom rail + search */
+.bottom-rail{ position:absolute; left:0; right:0; bottom:0; height:120px; z-index:3; border-top:1px solid var(--stroke) }
+.lens{ position:absolute; left:20px; bottom:94px; z-index:7; opacity:.9; color:var(--muted) }
+.bottom{ position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:8; display:flex; align-items:center; gap:12px }
+.search{ flex:1; padding:14px 16px; border-radius:999px; font-size:14px; color:var(--muted) }
+.go{ width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#07111f;
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); border:1px solid var(--stroke) }
+.chips{ display:flex; gap:8px }
+.chip{ padding:10px 14px; border-radius:999px; font-size:12px; font-weight:600; color:var(--muted) }
+
+/* Apply .glass to components */
+.shape-left,.shape-right,.logo,.pill,.icon,.search,.widget,.bottom-rail,.top-fill,.right-fill{ composes: glass; }
+.logo,.pill,.icon,.widget,.search{ background:var(--glass) }
+
+/* Canvas 3D */
+#bg{ position:absolute; inset:0; width:100%; height:100%; z-index:1 }
+
 @media (max-width:960px){
-  .frame{inset:12px}
-  .top-cloud-left,.right-cloud{display:none} /* simplificamos en mobile */
-  .widget{right:18px; bottom:96px; width:240px}
+  .frame{ inset:12px }
+  .shape-left,.shape-right{ display:none }
+  .widget{ right:18px; bottom:96px; width:240px }
 }
 </style>
 </head>
 <body>
-  <div class="frame">
-    <!-- DECORACIONES QUE FALTABAN -->
-    <div class="top-cloud-left" aria-hidden="true"></div>
-    <div class="right-cloud" aria-hidden="true"></div>
-    <div class="footer-rail" aria-hidden="true"></div>
+<div class="frame">
+  <!-- “plafones” -->
+  <div class="shape-left glass"></div>
+  <div class="shape-right glass"></div>
 
-    <!-- TOP -->
-    <div class="top">
-      <div class="left-wrap">
-        <div class="logo">FP</div>
-        <nav class="nav">
-          <button class="pill active">Home</button>
-          <button class="pill">About</button>
-          <button class="pill">Services</button>
-        </nav>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="top-content">
+      <div class="left">
+        <div class="logo glass">FP</div>
+        <button class="pill glass">Home</button>
+        <button class="pill glass">About</button>
+        <button class="pill glass">Services</button>
       </div>
-
-      <div class="right-wrap">
-        <div class="right-shell">
-          <!-- Iconos SVG embebidos -->
-          <a class="icon" href="#" aria-label="X">
-            <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
-          </a>
-          <a class="icon" href="#" aria-label="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.25-2.5a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
-          </a>
-          <a class="icon" href="#" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
-          </a>
-          <a class="cta" href="#signup">JOIN NOW →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3D + líneas -->
-    <canvas id="bg" aria-hidden="true"></canvas>
-    <div class="grid-lines" aria-hidden="true"></div>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <h1>WELCOME TO THE<br>FUTURE OF PAYMENTS</h1>
-        <p class="sub">Experience seamless transactions and cutting-edge security in the palm of your hand</p>
-      </div>
-    </section>
-
-    <!-- WIDGET DERECHO -->
-    <aside class="widget" id="signup">
-      <h3>Join the Revolution</h3>
-      <div class="progress">
-        <div class="ring" id="ring" style="--p:35%"></div>
-        <div class="value" id="val">35%</div>
-      </div>
-      <button class="cta-sm">SIGN UP</button>
-    </aside>
-
-    <!-- Lupa suelta + barra inferior -->
-    <div class="float-lens">🔍</div>
-    <div class="bottom-bar">
-      <div class="search">Experience seamless transactions and cutting-edge security in the palm of your hand</div>
-      <div class="go">➜</div>
-      <div class="mini">
-        <a class="chip" href="#">PRIVACY</a>
-        <a class="chip" href="#">TERMS</a>
+      <div class="right">
+        <a class="icon glass" href="#" aria-label="X">
+          <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
+        </a>
+        <a class="icon glass" href="#" aria-label="IG">
+          <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.25-2.5a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+        </a>
+        <a class="icon glass" href="#" aria-label="In">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
+        </a>
+        <a class="cta" href="#signup">JOIN NOW →</a>
       </div>
     </div>
   </div>
 
-<!-- THREE.JS (objeto flotante) -->
+  <!-- 3D + grid -->
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="grid" aria-hidden="true"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>WELCOME TO THE<br>FUTURE OF PAYMENTS</h1>
+      <p class="sub">Experience seamless transactions and cutting-edge security in the palm of your hand</p>
+    </div>
+  </section>
+
+  <!-- Widget -->
+  <aside class="widget glass" id="signup">
+    <h3>Join the Revolution</h3>
+    <div class="progress glass">
+      <div class="ring" id="ring" style="--p:25%"></div>
+      <div class="value" id="val">25%</div>
+    </div>
+    <button class="cta-sm">SIGN UP</button>
+  </aside>
+
+  <!-- Bottom rail + search -->
+  <div class="bottom-rail glass" aria-hidden="true"></div>
+  <div class="lens">🔍</div>
+  <div class="bottom">
+    <div class="search glass">Experience seamless transactions and cutting-edge security in the palm of your hand</div>
+    <div class="go">➜</div>
+    <div class="chips">
+      <a class="chip glass" href="#">PRIVACY</a>
+      <a class="chip glass" href="#">TERMS</a>
+    </div>
+  </div>
+</div>
+
+<!-- 3D -->
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+
 const canvas = document.getElementById('bg');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
+
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0a0f1d, 0.018);
+scene.fog = new THREE.FogExp2(0x0a0f1d, 0.02);
+
 const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 200);
-camera.position.set(0,0.8,6); scene.add(camera);
-scene.add(new THREE.AmbientLight(0x88aaff,.35));
-const key = new THREE.DirectionalLight(0x99ccff,.9); key.position.set(2,4,3); scene.add(key);
+camera.position.set(0, 0.8, 6);
+scene.add(camera);
+
+// luces
+scene.add(new THREE.AmbientLight(0x99bbff, .35));
+const key = new THREE.DirectionalLight(0xaaddff, 0.9); key.position.set(2,4,3); scene.add(key);
+
+// grupo roca + glow (más limpio)
 const group = new THREE.Group(); scene.add(group);
-const rockGeo = new THREE.IcosahedronGeometry(1.7,3);
-const rockMat = new THREE.MeshStandardMaterial({color:0x0f152a,metalness:.65,roughness:.35});
-const rock = new THREE.Mesh(rockGeo,rockMat); group.add(rock);
-const glowMat = new THREE.MeshBasicMaterial({color:0x7ee0ff});
-for(let i=0;i<28;i++){
-  const s=new THREE.Mesh(new THREE.SphereGeometry(0.06,16,16),glowMat);
-  const r=1.5+Math.random()*0.6; const a=Math.random()*Math.PI*2; const b=(Math.random()*Math.PI)-Math.PI/2;
-  s.position.set(Math.cos(a)*Math.cos(b)*r, Math.sin(b)*r, Math.sin(a)*Math.cos(b)*r); group.add(s);
+const rock = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(1.7, 3),
+  new THREE.MeshStandardMaterial({ color:0x0f152a, metalness:.65, roughness:.38 })
+);
+group.add(rock);
+
+// puntos glow más pequeños y pocos
+const glowMat = new THREE.MeshBasicMaterial({ color:0x7ee0ff });
+for(let i=0;i<12;i++){
+  const s = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), glowMat);
+  const r = 1.45 + Math.random()*0.5;
+  const a = Math.random()*Math.PI*2, b = (Math.random()*Math.PI)-Math.PI/2;
+  s.position.set(Math.cos(a)*Math.cos(b)*r, Math.sin(b)*r, Math.sin(a)*Math.cos(b)*r);
+  group.add(s);
 }
-const plane=new THREE.Mesh(new THREE.PlaneGeometry(40,20), new THREE.MeshBasicMaterial({color:0x0b1328,transparent:true,opacity:.55}));
-plane.rotation.x=-Math.PI/2.2; plane.position.y=-2.2; plane.position.z=-2; scene.add(plane);
-addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();});
-const pos=rock.geometry.attributes.position; const base=pos.array.slice();
+
+// plano tenue para profundidad
+const plane = new THREE.Mesh(
+  new THREE.PlaneGeometry(40, 20),
+  new THREE.MeshBasicMaterial({ color:0x0b1328, transparent:true, opacity:.45 })
+);
+plane.rotation.x = -Math.PI/2.2; plane.position.y = -2.2; plane.position.z = -2;
+scene.add(plane);
+
+// responsive
+addEventListener('resize', ()=>{
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+});
+
+// animación con wobble suave
+const pos = rock.geometry.attributes.position;
+const base = pos.array.slice();
 function wobble(t){
-  for(let i=0;i<pos.count;i++){const ix=i*3,iy=ix+1,iz=ix+2; const x=base[ix],y=base[iy],z=base[iz];
-    const n=Math.sin(x*1.7+t*.9)+Math.sin(y*1.3+t*1.1)+Math.sin(z*1.5+t*.7);
-    const f=1+n*0.06; pos.array[ix]=x*f; pos.array[iy]=y*f; pos.array[iz]=z*f;}
+  for(let i=0;i<pos.count;i++){
+    const ix=i*3, iy=ix+1, iz=ix+2;
+    const x=base[ix], y=base[iy], z=base[iz];
+    const n = Math.sin(x*1.6 + t*.8) + Math.sin(y*1.25 + t*1.05) + Math.sin(z*1.4 + t*.65);
+    const f = 1 + n*0.045; // menos deformación
+    pos.array[ix]=x*f; pos.array[iy]=y*f; pos.array[iz]=z*f;
+  }
   pos.needsUpdate=true; rock.geometry.computeVertexNormals();
 }
-let t0=performance.now();
-(function anim(now){
-  const t=(now-t0)/1000; wobble(t);
-  group.rotation.y=t*0.25; group.rotation.x=Math.sin(t*0.6)*0.1; group.position.y=Math.sin(t*0.9)*0.25;
-  renderer.render(scene,camera); requestAnimationFrame(anim);
-})(t0);
+let t0 = performance.now();
+function loop(now){
+  const t = (now - t0)/1000;
+  wobble(t);
+  group.rotation.y = t*0.22;
+  group.rotation.x = Math.sin(t*0.55)*0.09;
+  group.position.y = Math.sin(t*0.85)*0.22;
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
 
-/* aro progreso */
-const ring=document.getElementById('ring'); const val=document.getElementById('val'); let p=35;
-setInterval(()=>{p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%';},120);
+// progreso
+const ring = document.getElementById('ring');
+const val  = document.getElementById('val');
+let p = 25;
+setInterval(()=>{ p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%'; }, 120);
 </script>
 </body>
 </html>

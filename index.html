@@ -16,65 +16,29 @@ html,body{height:100%}
 body{margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg); background:var(--bg); overflow-x:hidden}
 
 /* ===== NAV ===== */
-.nav{
-  position:fixed; inset:0 0 auto 0; height:64px; z-index:20;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 clamp(16px,5vw,48px);
-  background:rgba(9,12,19,.45); backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
+.nav{position:fixed; inset:0 0 auto 0; height:64px; z-index:20; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(16px,5vw,48px); background:rgba(9,12,19,.45); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-left,.nav-right{display:flex; align-items:center; gap:24px}
-.nav a{
-  color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; position:relative; transition:color .2s ease;
-}
+.nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; position:relative; transition:color .2s ease}
 .nav a:hover{color:var(--fg)}
-.nav a::after{
-  content:""; position:absolute; left:0; right:100%; bottom:-8px; height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:right .25s ease;
-}
+.nav a::after{content:""; position:absolute; left:0; right:100%; bottom:-8px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:right .25s ease}
 .nav a:hover::after,.nav a.active::after{right:0}
-.logo{
-  height:40px; width:auto; display:block; border-radius:8px;
-  box-shadow:0 6px 18px rgba(0,0,0,.25);
-}
+.logo{height:40px; width:auto; display:block; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,.25)}
 
 /* ===== HERO ===== */
-.hero{
-  position:relative; height:100svh; min-height:620px; display:grid; align-items:center;
-  padding: clamp(24px,6vw,80px); padding-top: calc(64px + clamp(24px, 4vw, 60px));
-  overflow:hidden;
-}
-.bg,.bg2{
-  position:absolute; inset:-2%; z-index:-3; background-position:center; background-size:cover;
-  filter:saturate(.95) contrast(.95) brightness(.9);
-  transform:scale(1.05); opacity:1; transition:opacity .9s ease, transform 10s ease;
-}
+.hero{position:relative; height:100svh; min-height:620px; display:grid; align-items:center; padding: clamp(24px,6vw,80px); padding-top: calc(64px + clamp(24px, 4vw, 60px)); overflow:hidden}
+.bg,.bg2{position:absolute; inset:-2%; z-index:-3; background-position:center; background-size:cover; filter:saturate(.95) contrast(.95) brightness(.9); transform:scale(1.05); opacity:1; transition:opacity .9s ease, transform 10s ease}
 .bg2{z-index:-4; opacity:0}
-.hero::after{
-  content:""; position:absolute; inset:-40px; z-index:-2;
-  background: radial-gradient(60% 60% at 60% 40%, transparent 0%, rgba(0,0,0,.55) 100%);
-}
+.hero::after{content:""; position:absolute; inset:-40px; z-index:-2; background: radial-gradient(60% 60% at 60% 40%, transparent 0%, rgba(0,0,0,.55) 100%)}
 .stack{max-width:min(980px, 92vw)}
 h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.6vw, 70px)}
 .badge{padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.18); background:var(--glass); font-weight:700; font-size:12px; color:var(--fg); margin-right:8px}
 .sub{margin:12px 0 26px; color:var(--muted); font-size: clamp(14px, 1.5vw, 18px); max-width: 760px}
 
 /* ===== BOTONES ===== */
-.btn{
-  --x:0px; --y:0px; --s:0; --rx:0px; --ry:0px;
-  position:relative; isolation:isolate; overflow:hidden;
-  padding:12px 18px; border-radius:14px; font-weight:800; letter-spacing:.2px; cursor:pointer;
-  border:1px solid var(--line); background:transparent; color:var(--fg);
-  transform: translate(var(--x), var(--y));
-  transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
-}
+.btn{--x:0px; --y:0px; --s:0; --rx:0px; --ry:0px; position:relative; isolation:isolate; overflow:hidden; padding:12px 18px; border-radius:14px; font-weight:800; letter-spacing:.2px; cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--fg); transform: translate(var(--x), var(--y)); transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease}
 .btn.primary{ background:var(--glass); border-color:rgba(255,255,255,.18) }
 .btn:hover{ border-color:#9fb2ce; box-shadow:0 10px 30px rgba(0,0,0,.25); background:rgba(255,255,255,.05) }
-.ripple{
-  position:absolute; width:var(--s); height:var(--s); left:var(--rx); top:var(--ry);
-  background: radial-gradient(circle closest-side, rgba(255,255,255,.42), transparent 60%);
-  border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; opacity:.85; animation:rip .5s ease-out forwards;
-}
+.ripple{position:absolute; width:var(--s); height:var(--s); left:var(--rx); top:var(--ry); background: radial-gradient(circle closest-side, rgba(255,255,255,.42), transparent 60%); border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; opacity:.85; animation:rip .5s ease-out forwards}
 @keyframes rip{ to{opacity:0; transform:translate(-50%,-50%) scale(2.6)} }
 .actions{display:flex; gap:14px; flex-wrap:wrap}
 
@@ -84,54 +48,53 @@ h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.
 .section p{margin:0; color:var(--muted)}
 .hr{height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent); margin:26px 0}
 
-/* ===== PROYECTOS (layout más aireado) ===== */
-#proyectos .grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 20px;
-}
-#proyectos .card{
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:16px;
-  padding:20px;
-  background:rgba(255,255,255,.04);
-  box-shadow:0 6px 18px rgba(0,0,0,.22);
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-#proyectos .card:hover{
-  transform: translateY(-6px);
-  box-shadow:0 12px 28px rgba(0,0,0,.32);
-}
-#proyectos .card h3{ margin:0 0 8px; font-size:18px }
-#proyectos .card small{ color:var(--muted) }
+/* ===== PROYECTOS (cards aireadas) ===== */
+#proyectos .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; margin-top:20px}
+#proyectos .card{border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:20px; background:rgba(255,255,255,.04); box-shadow:0 6px 18px rgba(0,0,0,.22); transition: transform .25s ease, box-shadow .25s ease}
+#proyectos .card:hover{transform: translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,.32)}
+#proyectos .card h3{ margin:0 0 8px; font-size:18px } #proyectos .card small{ color:var(--muted) }
 
-/* ===== OTRAS GRIDS ===== */
-.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
-.chip{padding:9px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03); color:var(--fg); font-weight:700; font-size:12px}
-.timeline{display:grid; gap:14px; margin-top:14px}
-.item{border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; background:rgba(255,255,255,.03)}
-.item h3{margin:0 0 6px} .item .when{color:var(--muted); font-size:12px}
+/* ===== CONTACTO PRO mejorado con iconos ===== */
+.contact-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:18px}
+.c-card{position:relative; border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:18px 16px; background:rgba(255,255,255,.04); display:flex; gap:14px; align-items:center; transition: transform .2s ease, box-shadow .2s ease, border-color .2s}
+.c-card:hover{transform: translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.28); border-color: rgba(255,255,255,.16)}
+.c-ico{min-width:44px; height:44px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(135deg, rgba(126,224,255,.18), rgba(34,211,238,.18)); border:1px solid rgba(255,255,255,.16)}
+.c-ico svg{width:22px; height:22px; fill:var(--fg)}
+.c-body{flex:1}
+.c-title{margin:0; font-size:14px; color:var(--muted); font-weight:700; letter-spacing:.2px}
+.c-value{margin:2px 0 0; font-size:15px; word-break:break-word}
+.c-actions{display:flex; gap:8px}
+.icon-btn{display:inline-grid; place-items:center; width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); cursor:pointer; transition:transform .12s ease, background .12s ease, border-color .12s ease}
+.icon-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.22)}
+.icon-btn svg{width:18px; height:18px; fill:var(--fg)}
+.copy-toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); background:rgba(20,24,32,.9); color:var(--fg); padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); opacity:0; pointer-events:none; transition:opacity .25s ease}
+.copy-toast.show{opacity:1}
 
 /* ===== FOOTER ===== */
 .footer{padding:24px; text-align:center; color:var(--muted); font-size:12px; border-top:1px solid rgba(255,255,255,.06)}
 
 /* ===== RESP ===== */
-@media (max-width:720px){
-  .nav-left a{display:none} /* deja sólo el logo y los ítems se pueden anclar via hash */
-  .hero{ padding: 90px 18px 18px }
-}
+@media (max-width:720px){ .nav-left a{display:none} .hero{ padding: 90px 18px 18px } }
 </style>
 </head>
 <body>
 
+<!-- Sprite de iconos (reutilizables) -->
+<svg style="display:none">
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm2 .4V18h16V6.4l-8 5.2-8-5.2z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M3.9 12a5 5 0 0 1 5-5h3v2h-3a3 3 0 1 0 0 6h3v2h-3a5 5 0 0 1-5-5zm7.2 1h2v-2h-2v2zm4-6h-3v2h3a3 3 0 1 1 0 6h-3v2h3a5 5 0 1 0 0-10z"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.17-3.37-1.17-.46-1.16-1.12-1.47-1.12-1.47-.92-.63.07-.62.07-.62 1.02.07 1.56 1.05 1.56 1.05.9 1.54 2.36 1.1 2.94.85.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.7.12 2.5.35 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.67.92.67 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.37 2.3.56 3.6.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.4 21 3 12.6 3 2a1 1 0 0 1 1-1h3.52a1 1 0 0 1 1 1c0 1.3.19 2.5.56 3.6a1 1 0 0 1-.24 1L6.6 10.8z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M15 6l6-3v15l-6 3-6-3-6 3V6l6-3 6 3zm0 2l-6-3v10l6 3V8zm2 8l2-1V5l-2 1v10z"/></symbol>
+  <symbol id="i-open" viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zM5 5h6v2H7v10h10v-4h2v6H5V5z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 7h5v11H6V4h8v5a0 0 0 0 0 1 0z"/></symbol>
+</svg>
+
 <!-- NAV -->
 <header class="nav">
   <div class="nav-left">
-    <!-- LOGO: reemplaza logo.png por tu archivo si lo llamas distinto -->
-    <a href="#resumen" aria-label="Inicio">
-      <img class="logo" src="logo.png" alt="Logo">
-    </a>
+    <a href="#resumen" aria-label="Inicio"><img class="logo" src="logo.png" alt="Logo"></a>
     <a href="#resumen">Resumen</a>
     <a href="#experiencia">Experiencia</a>
     <a href="#proyectos">Proyectos</a>
@@ -144,17 +107,12 @@ h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.
 
 <!-- HERO -->
 <section class="hero" id="resumen">
-  <div class="bg" id="bgA"></div>
-  <div class="bg2" id="bgB"></div>
-
+  <div class="bg" id="bgA"></div><div class="bg2" id="bgB"></div>
   <div class="stack" id="heroStack">
     <h1>Jose Gallegos</h1>
     <span class="badge">Estudiante de Ingeniería en Estadística</span>
     <span class="badge">Quito, Ecuador</span>
-    <p class="sub">
-      Apasionado por el análisis de datos, la visualización y la inteligencia analítica.
-      Busco generar impacto social y estratégico a través de soluciones basadas en datos.
-    </p>
+    <p class="sub">Apasionado por el análisis de datos, la visualización y la inteligencia analítica. Busco generar impacto social y estratégico a través de soluciones basadas en datos.</p>
     <div class="actions">
       <a class="btn primary mag" href="#proyectos">Ver proyectos</a>
       <a class="btn mag" href="#contacto">Contactar</a>
@@ -183,21 +141,9 @@ h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.
 <section class="section" id="experiencia">
   <h2>Experiencia</h2>
   <div class="timeline">
-    <div class="item">
-      <div class="when">2024 – Presente</div>
-      <h3>Investigador Universitario · Proyecto Independiente</h3>
-      <p>Modelos predictivos en R/Python y dashboards interactivos en Power BI.</p>
-    </div>
-    <div class="item">
-      <div class="when">2023 – 2024</div>
-      <h3>Analista de Datos en Prácticas · Sociedad Ecuatoriana de Estadística</h3>
-      <p>Limpieza/EDA en R y Excel, informes técnicos y apoyo a iniciativas educativas.</p>
-    </div>
-    <div class="item">
-      <div class="when">2023</div>
-      <h3>Asistente de Investigación y Visualización · Grupo BI-DATA</h3>
-      <p>Soluciones en Power BI y automatización de reportes para proyectos sociales.</p>
-    </div>
+    <div class="item"><div class="when">2024 – Presente</div><h3>Investigador Universitario · Proyecto Independiente</h3><p>Modelos predictivos en R/Python y dashboards en Power BI.</p></div>
+    <div class="item"><div class="when">2023 – 2024</div><h3>Analista de Datos (Prácticas) · Sociedad Ecuatoriana de Estadística</h3><p>EDA en R/Excel, informes técnicos y apoyo a iniciativas educativas.</p></div>
+    <div class="item"><div class="when">2023</div><h3>Asistente de Investigación y Visualización · Grupo BI-DATA</h3><p>Soluciones en Power BI y automatización de reportes para proyectos sociales.</p></div>
   </div>
   <div class="hr"></div>
 </section>
@@ -216,18 +162,89 @@ h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.
       <small>Power BI · KPIs</small>
       <p>Paneles para comunicar indicadores sociales y educativos con storytelling.</p>
     </article>
-    <!-- Agrega más cards aquí si deseas -->
   </div>
   <div class="hr"></div>
 </section>
 
-<!-- CONTACTO -->
+<!-- CONTACTO MEJORADO -->
 <section class="section" id="contacto">
   <h2>Contacto</h2>
-  <p><strong>Email:</strong> <a href="mailto:carlosmexa302@gmail.com">carlosmexa302@gmail.com</a></p>
-  <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/carlos-meza-351a09295">linkedin.com/in/carlos-meza-351a09295</a></p>
-  <p><strong>GitHub:</strong> <a href="https://josescar.github.io">josescar.github.io</a></p>
-  <p><strong>Teléfono:</strong> +593 963281463</p>
+
+  <div class="contact-grid">
+    <!-- Email -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-mail"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">Email</p>
+        <p class="c-value"><a id="emailLink" href="mailto:carlosmexa302@gmail.com">carlosmexa302@gmail.com</a></p>
+      </div>
+      <div class="c-actions">
+        <a class="icon-btn" href="mailto:carlosmexa302@gmail.com" aria-label="Escribir email"><svg><use href="#i-mail"/></svg></a>
+        <button class="icon-btn" data-copy="carlosmexa302@gmail.com" aria-label="Copiar email"><svg><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-link"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">LinkedIn</p>
+        <p class="c-value"><a id="linkedinLink" href="https://linkedin.com/in/carlos-meza-351a09295" target="_blank" rel="noopener">linkedin.com/in/carlos-meza-351a09295</a></p>
+      </div>
+      <div class="c-actions">
+        <a class="icon-btn" href="https://linkedin.com/in/carlos-meza-351a09295" target="_blank" rel="noopener" aria-label="Abrir LinkedIn"><svg><use href="#i-open"/></svg></a>
+        <button class="icon-btn" data-copy="https://linkedin.com/in/carlos-meza-351a09295" aria-label="Copiar enlace"><svg><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+
+    <!-- GitHub / Portfolio -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-github"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">GitHub / Portfolio</p>
+        <p class="c-value"><a id="githubLink" href="https://josescar.github.io" target="_blank" rel="noopener">josescar.github.io</a></p>
+      </div>
+      <div class="c-actions">
+        <a class="icon-btn" href="https://josescar.github.io" target="_blank" rel="noopener" aria-label="Abrir sitio"><svg><use href="#i-open"/></svg></a>
+        <button class="icon-btn" data-copy="https://josescar.github.io" aria-label="Copiar enlace"><svg><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-phone"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">Teléfono</p>
+        <p class="c-value"><a id="phoneLink" href="tel:+593963281463">+593 963281463</a></p>
+      </div>
+      <div class="c-actions">
+        <a class="icon-btn" href="tel:+593963281463" aria-label="Llamar"><svg><use href="#i-phone"/></svg></a>
+        <button class="icon-btn" data-copy="+593963281463" aria-label="Copiar teléfono"><svg><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Ubicación -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-map"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">Ubicación</p>
+        <p class="c-value">Quito, Ecuador · Remoto</p>
+      </div>
+    </div>
+
+    <!-- CV -->
+    <div class="c-card">
+      <div class="c-ico"><svg><use href="#i-file"/></svg></div>
+      <div class="c-body">
+        <p class="c-title">Currículum</p>
+        <p class="c-value"><a href="Gallegos Curriculum.pdf" download>Descargar PDF</a></p>
+      </div>
+      <div class="c-actions">
+        <a class="icon-btn" href="Gallegos Curriculum.pdf" download aria-label="Descargar CV"><svg><use href="#i-file"/></svg></a>
+        <button class="icon-btn" data-copy="Gallegos Curriculum.pdf" aria-label="Copiar ruta CV"><svg><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer class="footer">© <span id="y">2025</span> Jose Gallegos</footer>
@@ -236,41 +253,26 @@ h1{margin:0 0 10px; font-weight:900; line-height:1.02; font-size: clamp(34px, 6.
 /* Año */
 document.getElementById('y').textContent = new Date().getFullYear();
 
-/* Botones magnéticos + ripple */
+/* Botones magnéticos + ripple (para CTAs del hero) */
 document.querySelectorAll('.mag').forEach(btn=>{
-  let r;
-  const upd=()=>r=btn.getBoundingClientRect(); upd(); addEventListener('resize',upd,{passive:true});
-  btn.addEventListener('mousemove',e=>{
-    const x=(e.clientX-r.left-r.width/2)/r.width, y=(e.clientY-r.top-r.height/2)/r.height;
-    btn.style.setProperty('--x',(x*7)+'px'); btn.style.setProperty('--y',(y*7)+'px');
-  });
+  let r; const upd=()=>r=btn.getBoundingClientRect(); upd(); addEventListener('resize',upd,{passive:true});
+  btn.addEventListener('mousemove',e=>{const x=(e.clientX-r.left-r.width/2)/r.width, y=(e.clientY-r.top-r.height/2)/r.height; btn.style.setProperty('--x',(x*7)+'px'); btn.style.setProperty('--y',(y*7)+'px');});
   btn.addEventListener('mouseleave',()=>{btn.style.setProperty('--x','0px'); btn.style.setProperty('--y','0px')});
-  btn.addEventListener('click',e=>{
-    const s=Math.max(r.width,r.height)*1.4, span=document.createElement('span');
-    span.className='ripple';
-    span.style.setProperty('--s',s+'px');
-    span.style.setProperty('--rx',(e.clientX-r.left)+'px');
-    span.style.setProperty('--ry',(e.clientY-r.top)+'px');
-    btn.appendChild(span); span.addEventListener('animationend',()=>span.remove());
-  });
+  btn.addEventListener('click',e=>{const s=Math.max(r.width,r.height)*1.4, span=document.createElement('span'); span.className='ripple'; span.style.setProperty('--s',s+'px'); span.style.setProperty('--rx',(e.clientX-r.left)+'px'); span.style.setProperty('--ry',(e.clientY-r.top)+'px'); btn.appendChild(span); span.addEventListener('animationend',()=>span.remove());});
 });
 
-/* Slideshow de fondos (cada 10s) */
-const fondos = [
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1920&auto=format&fit=crop"
-];
-let i=0, showA=true;
-const a=document.getElementById('bgA'), b=document.getElementById('bgB');
-const setImg=(el,url,rev=false)=>{ el.style.backgroundImage=`url('${url}')`; el.style.transform=rev?'scale(1.08) translate3d(10px,6px,0)':'scale(1.12) translate3d(-10px,-6px,0)'; };
-setImg(a, fondos[0]);
-setInterval(()=>{
-  i=(i+1)%fondos.length;
-  if(showA){ setImg(b,fondos[i],true); b.style.opacity='1'; a.style.opacity='0'; }
-  else    { setImg(a,fondos[i],false); a.style.opacity='1'; b.style.opacity='0'; }
-  showA=!showA;
-}, 10000);
+/* Slideshow de fondos (cada 10s) con Ken Burns leve */
+const fondos=["https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop","https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop","https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1920&auto=format&fit=crop"];
+let i=0,showA=true;const a=document.getElementById('bgA'),b=document.getElementById('bgB');
+const setImg=(el,url,rev=false)=>{el.style.backgroundImage=`url('${url}')`;el.style.transform=rev?'scale(1.08) translate3d(10px,6px,0)':'scale(1.12) translate3d(-10px,-6px,0)';};
+setImg(a,fondos[0]);setInterval(()=>{i=(i+1)%fondos.length; if(showA){setImg(b,fondos[i],true);b.style.opacity='1';a.style.opacity='0';}else{setImg(a,fondos[i],false);a.style.opacity='1';b.style.opacity='0';}showA=!showA;},10000);
+
+/* Copiar al portapapeles + toast */
+const toast=document.createElement('div');toast.className='copy-toast';toast.textContent='Copiado ✔';document.body.appendChild(toast);
+function showToast(){toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1200);}
+document.querySelectorAll('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{try{await navigator.clipboard.writeText(btn.getAttribute('data-copy'));showToast();}catch(e){console.log(e);}});
+});
 </script>
 </body>
 </html>

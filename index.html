@@ -10,141 +10,130 @@
 
 <style>
 :root{
-  --bg:#0c0f14;
-  --fg:#e9eef6;
-  --muted:#b0bbcc;
+  --bg:#0b0f16;
+  --fg:#ecf1f8;
+  --muted:#b4c0d5;
   --accent:#7ee0ff;
   --accent2:#22d3ee;
-  --outline:#485266;
-  --glass: rgba(255,255,255,.06);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg); background:var(--bg);
-  overflow-x:hidden;
+  --line:#2e3a4d;
+  --glass:rgba(255,255,255,.06);
 }
 
-/* ===== NAV ===== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg); background:var(--bg); overflow-x:hidden}
+
+/* ======= NAV ======= */
 .nav{
   position:fixed; inset:0 0 auto 0; height:64px; z-index:20;
   display:flex; align-items:center; justify-content:space-between;
-  padding:0 clamp(16px, 5vw, 48px);
-  background:rgba(10,12,18,.45);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  padding:0 clamp(16px,5vw,48px);
+  background:rgba(9,12,19,.45); backdrop-filter: blur(10px);
   border-bottom:1px solid rgba(255,255,255,.06);
 }
-.nav-left, .nav-right{display:flex; align-items:center; gap:22px}
+.nav-left,.nav-right{display:flex; align-items:center; gap:24px}
 .brand{font-weight:900; letter-spacing:.4px; font-size:16px}
-.nav a{
-  color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; position:relative;
-  transition:color .2s ease, opacity .2s ease;
-}
+.nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; position:relative; transition:color .2s ease}
 .nav a:hover{color:var(--fg)}
-/* subrayado animado */
 .nav a::after{
-  content:""; position:absolute; left:0; right:100%; bottom:-8px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2));
-  transition:right .25s ease;
+  content:""; position:absolute; left:0; right:100%; bottom:-8px; height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:right .25s ease;
 }
-.nav a:hover::after{ right:0 }
-/* iconos */
-.icon{
-  width:20px; height:20px; display:inline-grid; place-items:center; opacity:.9;
-  position:relative;
-}
-.icon svg{width:18px; height:18px; fill:var(--muted); transition:transform .2s ease, fill .2s ease}
+.nav a:hover::after,.nav a.active::after{right:0}
+.icon{width:20px; height:20px; display:grid; place-items:center}
+.icon svg{width:18px; height:18px; fill:var(--muted); transition:transform .18s ease, fill .18s ease}
 .icon:hover svg{fill:var(--fg); transform:translateY(-1px)}
-.icon[data-tip]::before{
-  content:attr(data-tip); position:absolute; bottom:-28px; left:50%; transform:translateX(-50%);
-  background:rgba(20,24,32,.9); color:var(--muted); font-size:11px; padding:6px 8px; border-radius:8px; opacity:0; pointer-events:none;
-  transition:opacity .2s ease, transform .2s ease; white-space:nowrap; border:1px solid rgba(255,255,255,.06);
-}
-.icon:hover::before{opacity:1; transform:translate(-50%,-2px)}
 
-/* ===== HERO ===== */
+/* ======= HERO ======= */
 .hero{
-  position:relative; height:100svh; min-height:560px; display:grid; align-items:center;
-  padding: clamp(24px, 6vw, 80px); padding-top: calc(64px + clamp(24px, 4vw, 60px));
+  position:relative; height:100svh; min-height:600px; display:grid; align-items:center;
+  padding: clamp(24px,6vw,80px); padding-top: calc(64px + clamp(24px, 4vw, 60px));
   overflow:hidden;
 }
-.hero::before{
-  /* TODO: cambia la imagen */
-  content:""; position:absolute; inset:-2%;
-  background:
-    linear-gradient(180deg, rgba(12,15,20,.78), rgba(12,15,20,.82)),
-    url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-  filter:saturate(.9) contrast(.95);
-  z-index:-2;
-  transform:translateZ(0);
+
+/* Fondo: dos capas para crossfade + Ken Burns */
+.bg, .bg2{
+  position:absolute; inset:-2%; z-index:-3; background-position:center; background-size:cover;
+  filter:saturate(.95) contrast(.95) brightness(.9);
+  transform: scale(1.05); opacity:1; transition: opacity .9s ease, transform 10s ease;
 }
+.bg2{z-index:-4; opacity:0}
+
+/* Vignette y granos */
 .hero::after{
-  content:""; position:absolute; inset:-40px;
+  content:""; position:absolute; inset:-40px; z-index:-2;
   background: radial-gradient(60% 60% at 60% 40%, transparent 0%, rgba(0,0,0,.55) 100%);
-  z-index:-1;
 }
-.stack{max-width:min(900px, 92vw); will-change: transform;}
+
+/* Blobs neón */
+.blobs{ position:absolute; inset:0; z-index:-1; filter: blur(60px); pointer-events:none; opacity:.6 }
+.blob{ position:absolute; width:340px; height:340px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);
+  mix-blend-mode: screen; animation:float 16s ease-in-out infinite;
+}
+.blob.b2{ background: radial-gradient(circle at 70% 70%, var(--accent2), transparent 60%); width:420px; height:420px; animation-duration:19s }
+@keyframes float{
+  0%{ transform: translate(10vw,15vh) }
+  50%{ transform: translate(65vw,20vh) }
+  100%{ transform: translate(10vw,15vh) }
+}
+
+.stack{max-width:min(900px, 92vw); will-change: transform}
 .kicker{color:var(--muted); font-weight:700; letter-spacing:.18em; text-transform:uppercase; font-size:12px; margin:0 0 10px}
-h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7vw, 76px)}
-.sub{margin:0 0 28px; color:var(--muted); font-size: clamp(14px, 1.6vw, 18px); max-width: 680px}
+h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7vw, 78px)}
+.sub{margin:0 0 28px; color:var(--muted); font-size: clamp(14px, 1.6vw, 18px); max-width: 720px}
 
-/* ===== BOTONES: magnéticos + ripple ===== */
+/* ======= BOTONES MAGNÉTICOS + RIPPLE ======= */
 .btn{
-  --s:0; --x:0px; --y:0px;
+  --x:0px; --y:0px; --s:0; --rx:0px; --ry:0px;
   position:relative; isolation:isolate; overflow:hidden;
-  border:1px solid var(--outline); background:transparent; color:var(--fg);
   padding:12px 18px; border-radius:14px; font-weight:800; letter-spacing:.2px; cursor:pointer;
-  transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
+  border:1px solid var(--line); background:transparent; color:var(--fg);
   transform: translate(var(--x), var(--y));
-  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: transform .12s ease, border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
 }
-.btn:hover{ border-color:var(--fg); background:rgba(255,255,255,.04); box-shadow: 0 10px 30px rgba(0,0,0,.25) }
-.btn.primary{ border-color:rgba(255,255,255,.22); background: var(--glass) }
-.btn.primary:hover{ background: rgba(255,255,255,.10) }
-
-/* ripple */
-.btn .ripple{
+.btn.primary{ background:var(--glass); border-color:rgba(255,255,255,.18) }
+.btn:hover{ border-color:#9fb2ce; box-shadow:0 10px 30px rgba(0,0,0,.25); background:rgba(255,255,255,.05) }
+.ripple{
   position:absolute; width:var(--s); height:var(--s); left:var(--rx); top:var(--ry);
-  background: radial-gradient(circle closest-side, rgba(255,255,255,.35), transparent 60%);
+  background: radial-gradient(circle closest-side, rgba(255,255,255,.42), transparent 60%);
   border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; opacity:.85; animation:rip .5s ease-out forwards;
 }
-@keyframes rip{ to{opacity:0; transform:translate(-50%,-50%) scale(2.5)} }
-
+@keyframes rip{ to{opacity:0; transform:translate(-50%,-50%) scale(2.6)} }
 .actions{display:flex; gap:14px; flex-wrap:wrap}
 
-/* ===== SECCIONES DEMO para scroll-reveal ===== */
+/* ======= SECCIONES ======= */
 .section{
   min-height:70svh; display:grid; align-items:center; padding:90px clamp(16px, 6vw, 80px);
-  background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,0));
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
 }
 .section h2{margin:0 0 10px; font-size: clamp(24px, 4.5vw, 42px); letter-spacing:.3px}
 .section p{margin:0; max-width:820px; color:var(--muted)}
-.grid{
-  margin-top:22px;
-  display:grid; gap:16px; grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+
+.grid{margin-top:22px; display:grid; gap:16px; grid-template-columns:repeat(3,minmax(0,1fr))}
 .card{
   border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; background:rgba(255,255,255,.03);
   transform:translateY(18px); opacity:0; transition: transform .6s ease, opacity .6s ease, box-shadow .2s ease, translate .2s ease;
-  will-change: transform, opacity;
 }
-.card:hover{ box-shadow:0 20px 50px rgba(0,0,0,.35); translate:0 -2px; }
-.revealed{ transform:none !important; opacity:1 !important; }
+.card:hover{ box-shadow:0 20px 50px rgba(0,0,0,.35); translate:0 -2px }
+.revealed{ transform:none !important; opacity:1 !important }
 
-/* ===== FOOTER ===== */
-.footer{
-  padding:22px; text-align:center; color:var(--muted); font-size:12px; opacity:.85;
-  border-top:1px solid rgba(255,255,255,.06);
-}
+/* ======= FOOTER ======= */
+.footer{padding:24px; text-align:center; color:var(--muted); font-size:12px; border-top:1px solid rgba(255,255,255,.06)}
 
-/* ===== MOTION SAFE ===== */
-@media (prefers-reduced-motion: reduce){
-  .btn{ transition:none }
-  .card{ transition:none }
-  .nav a::after{ transition:none }
-  .hero::before{ transform:none !important }
-}
+/* ======= RESPONSIVE ======= */
 @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
-@media (max-width:640px){ .nav-left a{display:none} .grid{grid-template-columns:1fr} }
+@media (max-width:640px){
+  .nav-left a{display:none}
+  .grid{grid-template-columns:1fr}
+  .hero{ padding: 90px 18px 18px }
+}
+
+/* ======= MOTION SAFE ======= */
+@media (prefers-reduced-motion: reduce){
+  .bg,.bg2,.blob{ animation: none !important; transition: none !important }
+  .btn,.card,.nav a::after{ transition:none !important }
+}
 </style>
 </head>
 <body>
@@ -158,24 +147,33 @@ h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7v
     <a href="#about">About</a>
   </div>
   <div class="nav-right">
-    <a class="icon" href="#" aria-label="LinkedIn" title="LinkedIn" data-tip="LinkedIn">
+    <a class="icon" href="#" aria-label="LinkedIn" title="LinkedIn">
       <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
     </a>
-    <a class="icon" href="#" aria-label="Dribbble" title="Dribbble" data-tip="Dribbble">
+    <a class="icon" href="#" aria-label="Dribbble" title="Dribbble">
       <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm6.9 9.5h-4.38a24.3 24.3 0 0 1-.78-1.86c2.47-.98 4.07-2.39 4.72-3.01A8.02 8.02 0 0 1 18.9 11.5ZM16.5 5.8c-.54.52-1.88 1.67-4.19 2.48a31.5 31.5 0 0 0-2.08-3.64A8.02 8.02 0 0 1 16.5 5.8ZM8.7 4.9a29.9 29.9 0 0 1 2.17 3.84c-2.83.73-6.62.83-7.58.84A8.03 8.03 0 0 1 8.7 4.9ZM3.2 12c0-.11 0-.23.01-.34 1.08 0 5.67-.06 8.87-1.03.2.43.39.88.57 1.34-3.2.96-5.72 3.25-7 5.9A8 8 0 0 1 3.2 12Zm3.6 6.57c1.12-2.38 3.3-4.48 6.13-5.35.67 1.87 1.21 4.08 1.5 6.7A8 8 0 0 1 6.8 18.57ZM15.58 20c-.28-2.76-.86-5.17-1.58-7.11.46-.1.95-.16 1.49-.16 1.55 0 3.3.4 4.61 1.02A8 8 0 0 1 15.58 20Z"/></svg>
     </a>
-    <a class="icon" href="mailto:tu@email.com" aria-label="Email" title="Email" data-tip="Email">
+    <a class="icon" href="mailto:tu@email.com" aria-label="Email" title="Email">
       <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm2 .4V18h16V6.4l-8 5.2-8-5.2z"/></svg>
     </a>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- HERO con fondos animados -->
 <section class="hero" id="home">
+  <!-- capas de fondo -->
+  <div class="bg"  id="bgA"></div>
+  <div class="bg2" id="bgB"></div>
+  <!-- blobs neón -->
+  <div class="blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+
   <div class="stack" id="heroStack">
     <p class="kicker">— Portafolio</p>
     <h1>Hola, soy <span style="opacity:.95;">Tu Nombre</span>.</h1>
-    <p class="sub">Soy un diseñador/analista multidisciplinario en <strong>Tu Ciudad</strong>. Ayudo a marcas y equipos a convertir ideas en productos claros, estéticos y efectivos.</p>
+    <p class="sub">Diseñador/analista multidisciplinario en <strong>Tu Ciudad</strong>. Convierto ideas en productos claros, estéticos y medibles.</p>
     <div class="actions">
       <a class="btn primary mag" href="#work">Ver trabajo</a>
       <a class="btn mag" href="#hello">Escríbeme</a>
@@ -186,7 +184,7 @@ h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7v
 <!-- WORK -->
 <section class="section" id="work">
   <h2>Trabajo reciente</h2>
-  <p>Una selección de proyectos de producto, UI/UX y data. Puedo compartir repos o estudios de caso bajo NDA.</p>
+  <p>Selección de proyectos de producto, UI/UX y data. Pregunta por estudios de caso.</p>
   <div class="grid">
     <article class="card"><h3>SaaS Dashboard</h3><p>KPIs, tablas, dark mode, exports.</p></article>
     <article class="card"><h3>Brand Site</h3><p>Landing animada, WebGL y CMS.</p></article>
@@ -207,7 +205,7 @@ h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7v
 <!-- ABOUT -->
 <section class="section" id="about">
   <h2>Sobre mí</h2>
-  <p>+5 años combinando diseño, frontend y analítica. Fan del diseño claro, accesible y medible.</p>
+  <p>+5 años combinando diseño, frontend y analítica. Creo en productos accesibles, medibles y bellos.</p>
 </section>
 
 <footer class="footer">© <span id="y">2025</span> · Hecho con ♥</footer>
@@ -216,20 +214,18 @@ h1{margin:0 0 14px; font-weight:900; line-height:1.02; font-size: clamp(36px, 7v
 /* ===== Año ===== */
 document.getElementById('y').textContent = new Date().getFullYear();
 
-/* ===== Parallax del hero (fondo + texto) ===== */
+/* ===== Parallax de hero (texto) ===== */
 (function(){
   const hero = document.querySelector('.hero');
   const stack = document.getElementById('heroStack');
   let rect = hero.getBoundingClientRect();
-  window.addEventListener('resize', ()=> rect = hero.getBoundingClientRect());
+  const onRes = ()=> rect = hero.getBoundingClientRect();
+  window.addEventListener('resize', onRes, {passive:true});
   window.addEventListener('mousemove', (e)=>{
     const x = (e.clientX - rect.width/2) / rect.width;
     const y = (e.clientY - rect.height/2) / rect.height;
-    hero.style.setProperty('--px', x);
-    hero.style.setProperty('--py', y);
     stack.style.transform = `translate3d(${x*-10}px, ${y*-10}px, 0)`;
-    hero.style.setProperty('--bgx', x*2+'%');
-  });
+  }, {passive:true});
 })();
 
 /* ===== Botones magnéticos + ripple ===== */
@@ -238,26 +234,22 @@ document.getElementById('y').textContent = new Date().getFullYear();
   mags.forEach(btn=>{
     let rect;
     const update = () => rect = btn.getBoundingClientRect();
-    update(); window.addEventListener('resize', update);
+    update(); addEventListener('resize', update, {passive:true});
 
     btn.addEventListener('mousemove', e=>{
       const x = (e.clientX - rect.left - rect.width/2)/rect.width;
       const y = (e.clientY - rect.top - rect.height/2)/rect.height;
-      btn.style.setProperty('--x', (x*6)+'px');
-      btn.style.setProperty('--y', (y*6)+'px');
+      btn.style.setProperty('--x', (x*7)+'px');
+      btn.style.setProperty('--y', (y*7)+'px');
     });
-    btn.addEventListener('mouseleave', ()=>{
-      btn.style.setProperty('--x','0px'); btn.style.setProperty('--y','0px');
-    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.setProperty('--x','0px'); btn.style.setProperty('--y','0px'); });
     btn.addEventListener('click', e=>{
-      const s = Math.max(rect.width, rect.height)*1.2;
-      const rx = (e.clientX - rect.left)+'px';
-      const ry = (e.clientY - rect.top)+'px';
+      const s = Math.max(rect.width, rect.height)*1.4;
       const span = document.createElement('span');
       span.className='ripple';
       span.style.setProperty('--s', s+'px');
-      span.style.setProperty('--rx', rx);
-      span.style.setProperty('--ry', ry);
+      span.style.setProperty('--rx', (e.clientX - rect.left)+'px');
+      span.style.setProperty('--ry', (e.clientY - rect.top)+'px');
       btn.appendChild(span);
       span.addEventListener('animationend', ()=> span.remove());
     });
@@ -274,7 +266,7 @@ document.getElementById('y').textContent = new Date().getFullYear();
   document.querySelectorAll('.card, .section h2, .section p').forEach(n=>obs.observe(n));
 })();
 
-/* ===== Highlight en el menú según sección ===== */
+/* ===== Menú activo por sección ===== */
 (function(){
   const links = [...document.querySelectorAll('.nav-left a')];
   const ids = links.map(a=>a.getAttribute('href')).filter(h=>h.startsWith('#'));
@@ -285,9 +277,51 @@ document.getElementById('y').textContent = new Date().getFullYear();
         links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+en.target.id));
       }
     });
-  }, {rootMargin:'-40% 0px -50% 0px', threshold:0});
+  }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
   sections.forEach(s=> s && obs.observe(s));
 })();
+
+/* ===== Slideshow de fondos (cada 10s) con Ken Burns ===== */
+/* TODO: pon tus imágenes (alta resolución) */
+const IMGS = [
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop'
+];
+
+(function(){
+  const a = document.getElementById('bgA');
+  const b = document.getElementById('bgB');
+  let i = 0, showA = true;
+
+  function setImage(el, url, reverse=false){
+    el.style.backgroundImage = `url('${url}')`;
+    el.style.transform = reverse ? 'scale(1.08) translate3d(10px, 6px, 0)' : 'scale(1.12) translate3d(-10px, -6px, 0)';
+  }
+
+  // primer fondo
+  setImage(a, IMGS[i++ % IMGS.length]);
+
+  setInterval(()=>{
+    const url = IMGS[i++ % IMGS.length];
+    if (showA){
+      setImage(b, url, true);
+      b.style.opacity = '1';
+      a.style.opacity = '0';
+    }else{
+      setImage(a, url, false);
+      a.style.opacity = '1';
+      b.style.opacity = '0';
+    }
+    showA = !showA;
+  }, 10000); // 10 segundos
+})();
+
+/* ===== Reduce motion respeta usuario ===== */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.bg,.bg2,.blob').forEach(el=>{ el.style.transition='none'; });
+}
 </script>
 
 </body>

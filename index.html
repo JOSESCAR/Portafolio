@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Mi Portafolio — Developer</title>
+<title>Future Pay — Landing</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -22,86 +22,13 @@ body{
   overflow:hidden;
 }
 
-/* Marco EXACTO como el original */
+/* Marco */
 .frame{position:fixed; inset:24px; border-radius:28px; overflow:hidden;
   background:rgba(6,10,20,.65); border:1px solid rgba(255,255,255,.08);
   box-shadow:0 40px 120px rgba(0,0,0,.55) inset, 0 10px 60px rgba(0,0,0,.55);
 }
 
-/* --- TOP BAR --- */
-.top{position:absolute; left:24px; right:24px; top:18px; height:64px; z-index:10;}
-/* grupo izq (logo + pills) */
-.left-wrap{display:flex; gap:12px; align-items:center}
-.logo{
-  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  font-weight:900; font-size:18px;
-}
-.nav{display:flex; gap:10px}
-.pill{
-  padding:10px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  color:var(--fg); font-weight:600; font-size:14px; cursor:pointer;
-  transition:all 0.3s ease;
-}
-.pill.active{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
-.pill:hover:not(.active){background:rgba(255,255,255,.1)}
-
-/* grupo der (iconos+CTA) con "encaje" EXACTO */
-.right-wrap{
-  position:absolute; top:0; right:0; height:64px; display:flex; align-items:center; gap:8px;
-}
-.right-shell{
-  position:relative; display:flex; align-items:center; gap:8px; padding:8px;
-  background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  border-radius:999px 0 0 999px; /* borde redondo a la izquierda, recto a la derecha */
-  overflow:visible;
-}
-/* pestaña "encajada" que redondea la esquina superior derecha del marco */
-.right-shell::after{
-  content:""; position:absolute; right:-16px; top:-16px; width:64px; height:64px;
-  border-top-right-radius:20px; border:1px solid var(--stroke);
-  background:var(--glass);
-  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-  z-index:-1;
-  /* recorte para que parezca encaje */
-  clip-path: path("M0,16 C0,7 7,0 16,0 H48 V48 H32 C14,48 0,34 0,16 Z");
-}
-.icon{
-  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid var(--stroke); background:rgba(255,255,255,.04);
-  transition:all 0.3s ease; cursor:pointer;
-}
-.icon:hover{background:rgba(255,255,255,.08)}
-.icon svg{width:18px;height:18px;fill:var(--muted)}
-.cta{
-  padding:10px 16px;border-radius:999px;border:0;cursor:pointer;
-  color:#06111f;font-weight:800;letter-spacing:.3px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  box-shadow:0 6px 28px rgba(34,211,238,.35);
-  transition:all 0.3s ease;
-}
-.cta:hover{transform:translateY(-1px); box-shadow:0 8px 32px rgba(34,211,238,.45)}
-
-/* HERO adaptado para portafolio */
-.hero{position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none}
-h1{margin:0; line-height:.92; font-size:clamp(38px,6.4vw,88px); font-weight:900; text-transform:uppercase}
-.sub{margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted); max-width:600px; margin-left:auto; margin-right:auto}
-
-/* Skills grid */
-.skills{margin-top:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:12px; max-width:500px; pointer-events:all}
-.skill{
-  padding:12px 16px; border-radius:999px; background:var(--glass); border:1px solid var(--stroke);
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  color:var(--fg); font-weight:600; font-size:13px; text-align:center;
-  transition:all 0.3s ease; cursor:pointer;
-}
-.skill:hover{background:linear-gradient(180deg,rgba(126,224,255,.15),rgba(34,211,238,.1)); transform:translateY(-2px)}
-
-/* GRID LINES + CANVAS */
-canvas#bg{position:absolute; inset:0; width:100%; height:100%}
+/* Líneas guía */
 .grid-lines{
   position:absolute; inset:0; pointer-events:none; z-index:2; opacity:.15;
   background:
@@ -109,7 +36,71 @@ canvas#bg{position:absolute; inset:0; width:100%; height:100%}
     linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 100% 420px;
 }
 
-/* WIDGET DERECHO adaptado */
+/* --- TOP BAR --- */
+.top{position:absolute; left:24px; right:24px; top:18px; height:64px; z-index:12;}
+
+/* plafón superior izquierdo (lo que faltaba) */
+.top-cloud-left{
+  position:absolute; top:-6px; left:0; width:520px; height:120px; z-index:3;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-radius:20px;
+  clip-path: path("M12,20 H360 C430,20 480,40 500,70 C515,95 510,112 480,112 H20 C10,112 4,106 4,96 V32 C4,24 8,20 12,20 Z");
+}
+
+/* grupo izq (logo + pills) */
+.left-wrap{position:relative; display:flex; gap:12px; align-items:center; z-index:4}
+.logo{
+  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  font-weight:900;
+}
+.nav{display:flex; gap:10px}
+.pill{
+  padding:10px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  color:var(--fg); font-weight:600; font-size:14px;
+}
+.pill.active{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
+
+/* grupo der con plafón encajado (lo que faltaba) */
+.right-wrap{position:absolute; top:0; right:0; height:64px; display:flex; align-items:center;}
+.right-shell{
+  position:relative; display:flex; align-items:center; gap:8px; padding:8px 8px 8px 10px; z-index:4;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-radius:999px;
+}
+/* gran plafón de fondo que “baja” por la derecha */
+.right-cloud{
+  position:absolute; top:-8px; right:-8px; width:520px; height:210px; z-index:3;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-radius:22px;
+  clip-path: path("M200,0 H480 C492,0 504,8 504,20 V170 C504,188 490,202 472,202 H220 C120,202 90,160 80,120 C70,78 92,40 140,24 C165,16 182,10 200,0 Z");
+}
+.icon{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--stroke); background:rgba(255,255,255,.04);
+}
+.icon svg{width:18px;height:18px;fill:var(--muted)}
+.cta{
+  padding:10px 16px;border-radius:999px;border:0;cursor:pointer;
+  color:#06111f;font-weight:800;letter-spacing:.3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  box-shadow:0 6px 28px rgba(34,211,238,.35);
+}
+
+/* HERO */
+.hero{position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none}
+h1{margin:0; line-height:.92; font-size:clamp(38px,6.4vw,88px); font-weight:900; text-transform:uppercase}
+.sub{margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted)}
+
+/* Canvas 3D */
+canvas#bg{position:absolute; inset:0; width:100%; height:100%; z-index:1}
+
+/* WIDGET DERECHO */
 .widget{
   position:absolute; right:28px; bottom:110px; width:280px; z-index:9;
   background:var(--glass); border:1px solid var(--stroke); border-radius:18px; padding:16px;
@@ -123,19 +114,28 @@ canvas#bg{position:absolute; inset:0; width:100%; height:100%}
   border:1px solid var(--stroke);
 }
 .ring{position:absolute; inset:12px; border-radius:50%;
-  background:conic-gradient(var(--accent2) var(--p,85%), rgba(255,255,255,.08) 0);
+  background:conic-gradient(var(--accent2) var(--p,35%), rgba(255,255,255,.08) 0);
   mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
 }
 .value{font-weight:800; font-size:28px}
 .cta-sm{margin-top:12px; width:100%; padding:10px 14px; border-radius:12px; border:0; cursor:pointer;
-  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#06111f; font-weight:800;
-  transition:all 0.3s ease;
-}
-.cta-sm:hover{transform:translateY(-1px)}
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#06111f; font-weight:800}
 
-/* BARRA INFERIOR */
+/* --- RIEL INFERIOR (lo que faltaba) --- */
+.footer-rail{
+  position:absolute; left:0; right:0; bottom:0; height:120px; z-index:3;
+  background:var(--glass); border-top:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+/* lupa suelta */
+.float-lens{
+  position:absolute; left:22px; bottom:92px; width:28px; height:28px; z-index:11;
+  display:grid; place-items:center; color:var(--muted); opacity:.9;
+}
+
+/* barra inferior original (search pill + chips) */
 .bottom-bar{
-  position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:10;
+  position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:12;
   display:flex; align-items:center; gap:12px;
 }
 .search{
@@ -146,58 +146,50 @@ canvas#bg{position:absolute; inset:0; width:100%; height:100%}
 }
 .go{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
   border:1px solid var(--stroke);
-  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); color:#06111f; font-weight:900;
-  cursor:pointer; transition:all 0.3s ease;
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); color:#06111f; font-weight:900
 }
-.go:hover{transform:scale(1.05)}
 .mini{display:flex; gap:8px}
-.chip{padding:10px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--stroke); 
-  color:var(--muted); font-size:12px; font-weight:600; text-decoration:none; cursor:pointer;
-  transition:all 0.3s ease;
-}
-.chip:hover{background:rgba(255,255,255,.1)}
+.chip{padding:10px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--stroke); color:var(--muted); font-size:12px; font-weight:600}
 
 /* RESPONSIVE */
 @media (max-width:960px){
-  .frame{inset:12px; border-radius:24px}
-  .right-shell::after{display:none} /* simplificamos la pestaña en móvil */
+  .frame{inset:12px}
+  .top-cloud-left,.right-cloud{display:none} /* simplificamos en mobile */
   .widget{right:18px; bottom:96px; width:240px}
-  .skills{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:640px){
-  .nav{display:none} /* ocultar nav en móvil muy pequeño */
-  .skills{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
   <div class="frame">
+    <!-- DECORACIONES QUE FALTABAN -->
+    <div class="top-cloud-left" aria-hidden="true"></div>
+    <div class="right-cloud" aria-hidden="true"></div>
+    <div class="footer-rail" aria-hidden="true"></div>
+
     <!-- TOP -->
     <div class="top">
       <div class="left-wrap">
-        <div class="logo">JD</div>
+        <div class="logo">FP</div>
         <nav class="nav">
-          <button class="pill active">Inicio</button>
-          <button class="pill">Proyectos</button>
-          <button class="pill">Contacto</button>
+          <button class="pill active">Home</button>
+          <button class="pill">About</button>
+          <button class="pill">Services</button>
         </nav>
       </div>
 
       <div class="right-wrap">
         <div class="right-shell">
-          <!-- GitHub -->
-          <a class="icon" href="#" aria-label="GitHub">
-            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <!-- Iconos SVG embebidos -->
+          <a class="icon" href="#" aria-label="X">
+            <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
           </a>
-          <!-- LinkedIn -->
+          <a class="icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm6.25-2.5a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+          </a>
           <a class="icon" href="#" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
           </a>
-          <!-- Email -->
-          <a class="icon" href="#" aria-label="Email">
-            <svg viewBox="0 0 24 24"><path d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
-          </a>
-          <a class="cta" href="#contact">CONECTAR →</a>
+          <a class="cta" href="#signup">JOIN NOW →</a>
         </div>
       </div>
     </div>
@@ -209,37 +201,29 @@ canvas#bg{position:absolute; inset:0; width:100%; height:100%}
     <!-- HERO -->
     <section class="hero">
       <div>
-        <h1>BIENVENIDO AL<br>FUTURO DEL DESARROLLO</h1>
-        <p class="sub">Creando experiencias digitales extraordinarias con tecnología de vanguardia y diseño innovador en la palma de tu mano</p>
-        
-        <div class="skills">
-          <div class="skill">JavaScript</div>
-          <div class="skill">React</div>
-          <div class="skill">Node.js</div>
-          <div class="skill">Python</div>
-          <div class="skill">TypeScript</div>
-          <div class="skill">CSS3</div>
-        </div>
+        <h1>WELCOME TO THE<br>FUTURE OF PAYMENTS</h1>
+        <p class="sub">Experience seamless transactions and cutting-edge security in the palm of your hand</p>
       </div>
     </section>
 
     <!-- WIDGET DERECHO -->
-    <aside class="widget" id="contact">
-      <h3>Progreso de Proyectos</h3>
+    <aside class="widget" id="signup">
+      <h3>Join the Revolution</h3>
       <div class="progress">
-        <div class="ring" id="ring" style="--p:85%"></div>
-        <div class="value" id="val">85%</div>
+        <div class="ring" id="ring" style="--p:35%"></div>
+        <div class="value" id="val">35%</div>
       </div>
-      <button class="cta-sm">VER PORTAFOLIO</button>
+      <button class="cta-sm">SIGN UP</button>
     </aside>
 
-    <!-- BARRA INFERIOR -->
+    <!-- Lupa suelta + barra inferior -->
+    <div class="float-lens">🔍</div>
     <div class="bottom-bar">
-      <div class="search">💼&nbsp; Desarrollador Full Stack especializado en crear experiencias web modernas y escalables</div>
-      <div class="go">⚡</div>
+      <div class="search">Experience seamless transactions and cutting-edge security in the palm of your hand</div>
+      <div class="go">➜</div>
       <div class="mini">
-        <a class="chip" href="#">PROYECTOS</a>
-        <a class="chip" href="#">CV</a>
+        <a class="chip" href="#">PRIVACY</a>
+        <a class="chip" href="#">TERMS</a>
       </div>
     </div>
   </div>
@@ -285,16 +269,8 @@ let t0=performance.now();
 })(t0);
 
 /* aro progreso */
-const ring=document.getElementById('ring'); const val=document.getElementById('val'); let p=85;
-setInterval(()=>{p=p>=100?85:p+1; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%';},80);
-
-/* interactividad pills */
-document.querySelectorAll('.pill').forEach(pill=>{
-  pill.addEventListener('click',()=>{
-    document.querySelector('.pill.active')?.classList.remove('active');
-    pill.classList.add('active');
-  });
-});
+const ring=document.getElementById('ring'); const val=document.getElementById('val'); let p=35;
+setInterval(()=>{p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%';},120);
 </script>
 </body>
 </html>

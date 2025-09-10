@@ -1,271 +1,251 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Future of Payments — Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Future Pay — Landing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a1422;
-    --panel:#0d1a2b;
-    --glass:rgba(255,255,255,.06);
-    --stroke:rgba(255,255,255,.14);
-    --fg:#e7ecf7; --muted:#a9b7d1;
-    --cyan:#67e7ff; --cyan-2:#22d3ee;
-    --radius:22px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; background:radial-gradient(1200px 800px at 20% -10%, #173357 0%, transparent 60%),
-                         radial-gradient(900px 600px at 80% 0%, #0e2a47 0%, transparent 55%),
-                         linear-gradient(#0a1422,#091120);
-    color:var(--fg); font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    overflow:hidden;
-  }
+:root{
+  --bg:#0b1220; --fg:#e7ecf7; --muted:#b2bed6;
+  --accent:#7ee0ff; --accent2:#22d3ee;
+  --glass:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--fg);
+  background:
+    radial-gradient(1200px 800px at 20% -10%, #243a6b 0%, transparent 60%),
+    radial-gradient(1000px 600px at 90% 10%, #15304f 0%, transparent 55%),
+    linear-gradient(#0b1220,#0a0f1d);
+  overflow:hidden;
+}
 
-  /* Marco */
-  .frame{
-    position:fixed; inset:18px; border-radius:28px; background:rgba(7,12,20,.75);
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:0 30px 90px rgba(0,0,0,.55) inset, 0 6px 38px rgba(0,0,0,.55);
-    overflow:hidden;
-  }
+/* Marco */
+.frame{position:fixed; inset:24px; border-radius:28px; overflow:hidden;
+  background:rgba(6,10,20,.65); border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 40px 120px rgba(0,0,0,.55) inset, 0 10px 60px rgba(0,0,0,.55);
+}
 
-  /* Grilla (los cuadritos) */
-  .grid{
-    position:absolute; inset:0; pointer-events:none; opacity:.22;
-    background:
-      linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/ 240px 100%,
-      linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/ 100% 180px;
-    z-index:1;
-  }
+/* --- TOP BAR --- */
+.top{position:absolute; left:24px; right:24px; top:18px; height:64px; z-index:10;}
+/* grupo izq (logo + pills) */
+.left-wrap{display:flex; gap:12px; align-items:center}
+.logo{
+  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  font-weight:900;
+}
+.nav{display:flex; gap:10px}
+.pill{
+  padding:10px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  color:var(--fg); font-weight:600; font-size:14px;
+}
+.pill.active{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
 
-  /* Top */
-  .top{
-    position:absolute; left:18px; right:18px; top:14px; height:64px; display:flex; align-items:center; gap:12px; z-index:3;
-  }
-  .logo{
-    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
-    background:var(--glass); border:1px solid var(--stroke); backdrop-filter:blur(8px);
-    font-weight:900; color:#dbe7ff;
-  }
-  .nav{display:flex; gap:8px}
-  .pill{
-    padding:10px 16px; border-radius:999px; border:1px solid var(--stroke); background:var(--glass);
-    color:#dbe7ff; font-weight:600; font-size:14px; backdrop-filter:blur(6px);
-  }
-  .grow{flex:1}
+/* grupo der (iconos+CTA) con “encaje” */
+.right-wrap{
+  position:absolute; top:0; right:0; height:64px; display:flex; align-items:center; gap:8px;
+}
+.right-shell{
+  position:relative; display:flex; align-items:center; gap:8px; padding:8px;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-radius:999px 0 0 999px; /* borde redondo a la izquierda, recto a la derecha */
+  overflow:visible;
+}
+/* pestaña “encajada” que redondea la esquina superior derecha del marco */
+.right-shell::after{
+  content:""; position:absolute; right:-16px; top:-16px; width:64px; height:64px;
+  border-top-right-radius:20px; border:1px solid var(--stroke);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  z-index:-1;
+  /* recorte para que parezca encaje */
+  clip-path: path("M0,16 C0,7 7,0 16,0 H48 V48 H32 C14,48 0,34 0,16 Z");
+}
+.icon{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--stroke); background:rgba(255,255,255,.04);
+}
+.icon svg{width:18px;height:18px;fill:var(--muted)}
+.cta{
+  padding:10px 16px;border-radius:999px;border:0;cursor:pointer;
+  color:#06111f;font-weight:800;letter-spacing:.3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  box-shadow:0 6px 28px rgba(34,211,238,.35);
+}
 
-  /* Social apilado a la derecha */
-  .social-stack{
-    position:absolute; right:18px; top:10px; display:flex; flex-direction:column; gap:8px; z-index:4;
-  }
-  .dot{
-    width:36px;height:36px;border-radius:999px; display:grid;place-items:center;
-    border:1px solid var(--stroke); background:rgba(255,255,255,.06); color:#b7c4da; font-weight:700; font-size:12px;
-    box-shadow:0 3px 10px rgba(0,0,0,.35);
-  }
-  .cta{
-    position:absolute; right:18px; top:58px; z-index:4;
-    padding:12px 18px; border-radius:999px; border:0; cursor:pointer; font-weight:900;
-    color:#06111f; background:linear-gradient(90deg,var(--cyan),var(--cyan-2));
-    box-shadow:0 8px 28px rgba(34,211,238,.35);
-  }
+/* HERO */
+.hero{position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:5; pointer-events:none}
+h1{margin:0; line-height:.92; font-size:clamp(38px,6.4vw,88px); font-weight:900; text-transform:uppercase}
+.sub{margin-top:14px; font-size:clamp(13px,1.4vw,18px); color:var(--muted)}
 
-  /* Hero */
-  .hero{
-    position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:2; pointer-events:none;
-  }
-  h1{
-    margin:0; line-height:.92; font-size: clamp(44px, 7.5vw, 96px);
-    font-weight:900; text-transform:uppercase; text-shadow:0 10px 40px rgba(0,0,0,.7);
-  }
-  .sub{ margin-top:14px; color:#c5d0e6; font-size:clamp(13px,1.4vw,18px) }
+/* GRID LINES + CANVAS */
+canvas#bg{position:absolute; inset:0; width:100%; height:100%}
+.grid-lines{
+  position:absolute; inset:0; pointer-events:none; z-index:2; opacity:.15;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 560px 100%,
+    linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 100% 420px;
+}
 
-  /* Canvas esfera/dots */
-  #hero-canvas{ position:absolute; inset:0; z-index:0; }
+/* WIDGET DERECHO */
+.widget{
+  position:absolute; right:28px; bottom:110px; width:280px; z-index:9;
+  background:var(--glass); border:1px solid var(--stroke); border-radius:18px; padding:16px;
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+}
+.widget h3{margin:0 0 6px 0; font-size:14px; font-weight:700}
+.progress{width:100%; aspect-ratio:1/1; border-radius:16px; margin-top:8px;
+  display:grid; place-items:center; position:relative; overflow:hidden;
+  background:radial-gradient(closest-side, rgba(126,224,255,.14), transparent 65%),
+             linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid var(--stroke);
+}
+.ring{position:absolute; inset:12px; border-radius:50%;
+  background:conic-gradient(var(--accent2) var(--p,35%), rgba(255,255,255,.08) 0);
+  mask:radial-gradient(farthest-side, transparent calc(100% - 14px), #000 0);
+}
+.value{font-weight:800; font-size:28px}
+.cta-sm{margin-top:12px; width:100%; padding:10px 14px; border-radius:12px; border:0; cursor:pointer;
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#06111f; font-weight:800}
 
-  /* Widget derecho */
-  .widget{
-    position:absolute; right:28px; bottom:120px; width:300px;
-    background:rgba(255,255,255,.05); border:1px solid var(--stroke); border-radius:18px; padding:14px 14px 18px;
-    backdrop-filter:blur(10px); z-index:3; box-shadow:0 10px 26px rgba(0,0,0,.35);
-  }
-  .widget h4{ margin:6px 6px 10px; font-size:14px; color:#dfe8ff; }
-  .donut{
-    width:100%; aspect-ratio:1/1; background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
-    border-radius:16px; display:grid; place-items:center; border:1px solid var(--stroke);
-  }
-  .donut svg{ width:74%; height:auto; }
-  .donut .txt{ font-weight:800; font-size:28px; fill:#e7ecf7 }
-  .widget .btn{
-    margin-top:12px; width:100%; padding:12px 14px; border-radius:14px; border:2px solid rgba(255,255,255,.18);
-    background:linear-gradient(180deg,#7fe9ff,#6adff4 60%, #47cfe7); color:#0a1422; font-weight:900; letter-spacing:.3px; cursor:pointer;
-  }
+/* BARRA INFERIOR */
+.bottom-bar{
+  position:absolute; left:24px; right:24px; bottom:18px; height:70px; z-index:10;
+  display:flex; align-items:center; gap:12px;
+}
+.search{
+  flex:1; display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:999px;
+  background:var(--glass); border:1px solid var(--stroke);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  color:var(--muted); font-size:14px;
+}
+.go{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--stroke);
+  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05)); color:#06111f; font-weight:900
+}
+.mini{display:flex; gap:8px}
+.chip{padding:10px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--stroke); color:var(--muted); font-size:12px; font-weight:600}
 
-  /* Barra inferior */
-  .bottom{
-    position:absolute; left:18px; right:18px; bottom:16px; display:flex; align-items:center; gap:10px; z-index:3;
-  }
-  .search{
-    flex:1; display:flex; align-items:center; gap:10px; border-radius:999px; padding:14px 16px;
-    background:rgba(255,255,255,.05); border:1px solid var(--stroke); color:#c8d4ea; font-size:14px; backdrop-filter:blur(8px);
-  }
-  .arrow{
-    width:42px;height:42px;border-radius:999px; display:grid;place-items:center; border:1px solid var(--stroke);
-    background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.05));
-    color:#091120; font-weight:900;
-  }
-  .chip{ padding:10px 14px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid var(--stroke);
-         color:#b3c1db; font-weight:600; font-size:12px; }
-
-  /* Responsivo */
-  @media (max-width:980px){
-    .frame{inset:10px}
-    .widget{right:16px; bottom:100px; width:260px}
-    .social-stack{right:10px}
-    .cta{right:10px}
-    .top{left:10px; right:10px}
-    .bottom{left:10px; right:10px}
-  }
+/* RESPONSIVE */
+@media (max-width:960px){
+  .frame{inset:12px}
+  .right-shell::after{display:none} /* simplificamos la pestaña en móvil */
+  .widget{right:18px; bottom:96px; width:240px}
+}
 </style>
 </head>
 <body>
   <div class="frame">
-    <!-- Social apilado y CTA -->
-    <div class="social-stack">
-      <a class="dot" href="#" aria-label="X">X</a>
-      <a class="dot" href="#" aria-label="IG">IG</a>
-      <a class="dot" href="#" aria-label="LinkedIn">In</a>
-    </div>
-    <button class="cta">JOIN NOW →</button>
-
-    <!-- Top bar -->
+    <!-- TOP -->
     <div class="top">
-      <div class="logo">FX</div>
-      <nav class="nav">
-        <button class="pill">Home</button>
-        <button class="pill">About</button>
-        <button class="pill">Services</button>
-      </nav>
-      <div class="grow"></div>
+      <div class="left-wrap">
+        <div class="logo">FP</div>
+        <nav class="nav">
+          <button class="pill active">Home</button>
+          <button class="pill">About</button>
+          <button class="pill">Services</button>
+        </nav>
+      </div>
+
+      <div class="right-wrap">
+        <div class="right-shell">
+          <!-- Iconos SVG embebidos -->
+          <a class="icon" href="#" aria-label="X">
+            <svg viewBox="0 0 24 24"><path d="M3 3h3l6 7 6-7h3l-7.5 9L21 21h-3l-6-7-6 7H3l7.5-9L3 3z"/></svg>
+          </a>
+          <a class="icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm6.25-3a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+          </a>
+          <a class="icon" href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v15H0zM8 8h4.8v2.1h.07C13.6 8.8 15.4 8 17.6 8 22.4 8 24 10.9 24 15.6V23H19v-6.5c0-1.6 0-3.7-2.3-3.7-2.3 0-2.7 1.8-2.7 3.6V23H8z"/></svg>
+          </a>
+          <a class="cta" href="#signup">JOIN NOW →</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Canvas esfera + partículas -->
-    <canvas id="hero-canvas"></canvas>
+    <!-- 3D + líneas -->
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <div class="grid-lines" aria-hidden="true"></div>
 
-    <!-- Grilla de “cuadritos” -->
-    <div class="grid" aria-hidden="true"></div>
-
-    <!-- Hero copy -->
-    <section class="hero" aria-hidden="false">
+    <!-- HERO -->
+    <section class="hero">
       <div>
         <h1>WELCOME TO THE<br>FUTURE OF PAYMENTS</h1>
         <p class="sub">Experience seamless transactions and cutting-edge security in the palm of your hand</p>
       </div>
     </section>
 
-    <!-- Widget donut -->
-    <aside class="widget">
-      <h4>Join the Revolution</h4>
-      <div class="donut">
-        <!-- SVG donut preciso -->
-        <svg viewBox="0 0 120 120">
-          <defs>
-            <linearGradient id="g" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" stop-color="#67e7ff"/><stop offset="100%" stop-color="#22d3ee"/>
-            </linearGradient>
-          </defs>
-          <!-- pista -->
-          <circle cx="60" cy="60" r="46" stroke="rgba(255,255,255,.12)" stroke-width="12" fill="none" />
-          <!-- progreso -->
-          <circle id="arc" cx="60" cy="60" r="46"
-                  stroke="url(#g)" stroke-width="12" stroke-linecap="round"
-                  fill="none" transform="rotate(-90 60 60)"
-                  stroke-dasharray="289" stroke-dashoffset="153"/>
-          <text id="pct" class="txt" x="60" y="66" text-anchor="middle">47%</text>
-        </svg>
+    <!-- WIDGET DERECHO -->
+    <aside class="widget" id="signup">
+      <h3>Join the Revolution</h3>
+      <div class="progress">
+        <div class="ring" id="ring" style="--p:35%"></div>
+        <div class="value" id="val">35%</div>
       </div>
-      <button class="btn">SIGN UP</button>
+      <button class="cta-sm">SIGN UP</button>
     </aside>
 
-    <!-- Barra inferior -->
-    <div class="bottom">
-      <div class="search">📍&nbsp;Experience seamless transactions and cutting-edge security in the palm of your hand</div>
-      <div class="arrow">➜</div>
-      <div class="chip">PRIVACY</div>
-      <div class="chip">TERMS</div>
+    <!-- BARRA INFERIOR -->
+    <div class="bottom-bar">
+      <div class="search">⚲&nbsp; Experience seamless transactions and cutting-edge security in the palm of your hand</div>
+      <div class="go">➜</div>
+      <div class="mini">
+        <a class="chip" href="#">PRIVACY</a>
+        <a class="chip" href="#">TERMS</a>
+      </div>
     </div>
   </div>
 
-<script>
-/* ====== Canvas: Esfera oscura + puntos cian ====== */
-const c = document.getElementById('hero-canvas');
-const ctx = c.getContext('2d');
-function size(){ c.width = innerWidth; c.height = innerHeight; }
-size(); addEventListener('resize', size);
-
-const dots = Array.from({length:22}, ()=>({
-  a: Math.random()*Math.PI*2,
-  r: 160 + Math.random()*40,
-  s: .4 + Math.random()*0.5
-}));
-
-function draw(){
-  const w=c.width, h=c.height;
-  ctx.clearRect(0,0,w,h);
-
-  // gradiente de fondo sutil (oscurecer parte inferior)
-  const g = ctx.createLinearGradient(0, h*0.55, 0, h);
-  g.addColorStop(0,'rgba(0,0,0,0)');
-  g.addColorStop(1,'rgba(0,0,0,.55)');
-  ctx.fillStyle=g; ctx.fillRect(0,h*0.55,w,h*0.45);
-
-  // esfera (gran círculo) centrada baja
-  const x=w*0.55, y=h*0.75, R=Math.min(w,h)*0.5;
-  const sphereR = Math.max(260, Math.min(R, 520));
-  const grd = ctx.createRadialGradient(x-40,y-40,sphereR*0.2, x,y,sphereR);
-  grd.addColorStop(0,'#0f1b2d'); grd.addColorStop(1,'#070e19');
-  ctx.fillStyle=grd;
-  ctx.beginPath(); ctx.arc(x,y,sphereR,0,Math.PI*2); ctx.fill();
-
-  // caras sutiles (polígono oscuro)
-  ctx.fillStyle="#0b1626";
-  ctx.beginPath();
-  ctx.moveTo(x- sphereR*0.18, y- sphereR*0.25);
-  ctx.lineTo(x+ sphereR*0.10, y- sphereR*0.12);
-  ctx.lineTo(x+ sphereR*0.05, y+ sphereR*0.10);
-  ctx.lineTo(x- sphereR*0.22, y+ sphereR*0.02);
-  ctx.closePath(); ctx.fill();
-
-  // partículas que orbitan
-  dots.forEach((d,i)=>{
-    d.a += 0.003 + d.s*0.001;
-    const px = x + Math.cos(d.a)*d.r;
-    const py = y + Math.sin(d.a)*d.r*0.45 - sphereR*0.55; // sobre la esfera
-    ctx.beginPath();
-    ctx.fillStyle = '#79e9ff';
-    ctx.arc(px, py, 10, 0, Math.PI*2);
-    ctx.fill();
-  });
-
-  requestAnimationFrame(draw);
+<!-- THREE.JS (objeto flotante) -->
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+const canvas = document.getElementById('bg');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a0f1d, 0.018);
+const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.1, 200);
+camera.position.set(0,0.8,6); scene.add(camera);
+scene.add(new THREE.AmbientLight(0x88aaff,.35));
+const key = new THREE.DirectionalLight(0x99ccff,.9); key.position.set(2,4,3); scene.add(key);
+const group = new THREE.Group(); scene.add(group);
+const rockGeo = new THREE.IcosahedronGeometry(1.7,3);
+const rockMat = new THREE.MeshStandardMaterial({color:0x0f152a,metalness:.65,roughness:.35});
+const rock = new THREE.Mesh(rockGeo,rockMat); group.add(rock);
+const glowMat = new THREE.MeshBasicMaterial({color:0x7ee0ff});
+for(let i=0;i<28;i++){
+  const s=new THREE.Mesh(new THREE.SphereGeometry(0.06,16,16),glowMat);
+  const r=1.5+Math.random()*0.6; const a=Math.random()*Math.PI*2; const b=(Math.random()*Math.PI)-Math.PI/2;
+  s.position.set(Math.cos(a)*Math.cos(b)*r, Math.sin(b)*r, Math.sin(a)*Math.cos(b)*r); group.add(s);
 }
-draw();
-
-/* ====== Donut: ajustar % exactamente 47 ====== */
-const arc = document.getElementById('arc');
-const pct = document.getElementById('pct');
-// stroke-dasharray ≈ 2πr = 2*π*46 ≈ 289
-function setPercent(p){
-  const total = 289;
-  const off = total * (1 - p/100);
-  arc.setAttribute('stroke-dashoffset', off.toFixed(1));
-  pct.textContent = p + '%';
+const plane=new THREE.Mesh(new THREE.PlaneGeometry(40,20), new THREE.MeshBasicMaterial({color:0x0b1328,transparent:true,opacity:.55}));
+plane.rotation.x=-Math.PI/2.2; plane.position.y=-2.2; plane.position.z=-2; scene.add(plane);
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();});
+const pos=rock.geometry.attributes.position; const base=pos.array.slice();
+function wobble(t){
+  for(let i=0;i<pos.count;i++){const ix=i*3,iy=ix+1,iz=ix+2; const x=base[ix],y=base[iy],z=base[iz];
+    const n=Math.sin(x*1.7+t*.9)+Math.sin(y*1.3+t*1.1)+Math.sin(z*1.5+t*.7);
+    const f=1+n*0.06; pos.array[ix]=x*f; pos.array[iy]=y*f; pos.array[iz]=z*f;}
+  pos.needsUpdate=true; rock.geometry.computeVertexNormals();
 }
-setPercent(47);
+let t0=performance.now();
+(function anim(now){
+  const t=(now-t0)/1000; wobble(t);
+  group.rotation.y=t*0.25; group.rotation.x=Math.sin(t*0.6)*0.1; group.position.y=Math.sin(t*0.9)*0.25;
+  renderer.render(scene,camera); requestAnimationFrame(anim);
+})(t0);
+
+/* aro progreso */
+const ring=document.getElementById('ring'); const val=document.getElementById('val'); let p=35;
+setInterval(()=>{p=(p+1)%101; ring.style.setProperty('--p',p+'%'); val.textContent=p+'%';},120);
 </script>
 </body>
 </html>

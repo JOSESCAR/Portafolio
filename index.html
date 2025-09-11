@@ -660,59 +660,66 @@ document.addEventListener('DOMContentLoaded', function() {
   
   fadeElements.forEach(el => fadeObserver.observe(el));
   
-  // Cambio dinámico de fondo
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const heroBg = document.getElementById('heroBg');   // <div class="hero-bg" id="heroBg">
+  const hero    = document.getElementById('inicio');  // <section id="inicio">…</section>
+  const fx      = document.getElementById('heroFx');  // <div class="hero-effect" id="heroFx">
+
+  // Si no existen, no seguimos (evita errores en consola)
+  if (!hero || !heroBg) return;
+
+  // --- Cambio dinámico de fondo (cada 10s)
   const backgrounds = [
     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1920&auto=format&fit=crop'
   ];
-  
   let currentBg = 0;
-  const heroBg = document.getElementById('heroBg');
-  
+  heroBg.style.backgroundImage = `url('${backgrounds[0]}')`; // fondo inicial
   setInterval(() => {
     currentBg = (currentBg + 1) % backgrounds.length;
     heroBg.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
-  }, 8000);
-});
+  }, 10000);
 
-  // ---- Parallax sutil con el scroll
-window.addEventListener('scroll', ()=>{
-  const y = window.scrollY || 0;
-  // mueve muy poco para no marear (escala y translateY)
-  heroBg.style.transform = `translateY(${y * 0.12}px) scale(1.06)`;
-}, {passive:true});
+  // --- Parallax sutil con el scroll
+  const onScroll = () => {
+    const y = window.scrollY || 0;
+    heroBg.style.transform = `translateY(${y * 0.12}px) scale(1.06)`;
+  };
+  onScroll(); // aplicar al cargar
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-// ---- Luz/aro celeste que sigue al mouse
-const hero = document.getElementById('inicio');
-const fx = document.getElementById('heroFx');
+  // --- Luz/aro celeste (si existe el div heroFx)
+  if (fx) {
+    let autoT = 0, followMouse = false;
 
-let autoT = 0, followMouse = false;
-function setLight(x, y){
-  fx.style.setProperty('--lx', x + 'px');
-  fx.style.setProperty('--ly', y + 'px');
-}
+    function setLight(x, y) {
+      fx.style.setProperty('--lx', x + 'px');
+      fx.style.setProperty('--ly', y + 'px');
+    }
 
-// sigue el cursor
-hero.addEventListener('mousemove', (e)=>{
-  const r = hero.getBoundingClientRect();
-  setLight(e.clientX - r.left, e.clientY - r.top);
-  followMouse = true;
-});
-hero.addEventListener('mouseleave', ()=> followMouse=false);
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      setLight(e.clientX - r.left, e.clientY - r.top);
+      followMouse = true;
+    });
+    hero.addEventListener('mouseleave', () => (followMouse = false));
 
-// animación automática cuando no hay mouse (bucle)
-(function animate(){
-  if(!followMouse){
-    const r = hero.getBoundingClientRect();
-    // trayectoria en “8”
-    const cx = r.width/2 + Math.cos(autoT*0.9) * r.width*0.25;
-    const cy = r.height/2 + Math.sin(autoT*1.2) * r.height*0.18;
-    setLight(cx, cy);
-    autoT += 0.016; // ~60fps
+    (function animate() {
+      if (!followMouse) {
+        const r = hero.getBoundingClientRect();
+        // trayectoria en “8”
+        const cx = r.width / 2 + Math.cos(autoT * 0.9) * r.width * 0.25;
+        const cy = r.height / 2 + Math.sin(autoT * 1.2) * r.height * 0.18;
+        setLight(cx, cy);
+        autoT += 0.016; // ~60fps
+      }
+      requestAnimationFrame(animate);
+    })();
   }
-  requestAnimationFrame(animate);
-})();
+});
+</script>
 
 // Función para copiar texto
 function copyText(text) {

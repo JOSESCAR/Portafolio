@@ -330,10 +330,13 @@ body{
 <section class="hero hero-min" id="inicio">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
+  <div class="hero-effect" id="heroFx"></div>
 
   <div class="hero-center">
     <h1 class="hero-title">Hola, soy Jose.</h1>
-    <p class="hero-sub">Estudiante de Ingeniería en Estadística. Me apasiona convertir datos en insights valiosos.</p>
+    <p class="hero-sub">
+      Estudiante de Ingeniería en Estadística. Me apasiona convertir datos en insights valiosos.
+    </p>
 
     <div class="hero-chips">
       <span class="chip">Estadística</span>
@@ -346,7 +349,6 @@ body{
     </div>
   </div>
 </section>
-
 <!-- EXPERIENCIA -->
 <section class="section" id="experiencia">
   <div class="section-header">
@@ -674,6 +676,44 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 8000);
 });
 
+  // ---- Parallax sutil con el scroll
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY || 0;
+  // mueve muy poco para no marear (escala y translateY)
+  heroBg.style.transform = `translateY(${y * 0.12}px) scale(1.06)`;
+}, {passive:true});
+
+// ---- Luz/aro celeste que sigue al mouse
+const hero = document.getElementById('inicio');
+const fx = document.getElementById('heroFx');
+
+let autoT = 0, followMouse = false;
+function setLight(x, y){
+  fx.style.setProperty('--lx', x + 'px');
+  fx.style.setProperty('--ly', y + 'px');
+}
+
+// sigue el cursor
+hero.addEventListener('mousemove', (e)=>{
+  const r = hero.getBoundingClientRect();
+  setLight(e.clientX - r.left, e.clientY - r.top);
+  followMouse = true;
+});
+hero.addEventListener('mouseleave', ()=> followMouse=false);
+
+// animación automática cuando no hay mouse (bucle)
+(function animate(){
+  if(!followMouse){
+    const r = hero.getBoundingClientRect();
+    // trayectoria en “8”
+    const cx = r.width/2 + Math.cos(autoT*0.9) * r.width*0.25;
+    const cy = r.height/2 + Math.sin(autoT*1.2) * r.height*0.18;
+    setLight(cx, cy);
+    autoT += 0.016; // ~60fps
+  }
+  requestAnimationFrame(animate);
+})();
+
 // Función para copiar texto
 function copyText(text) {
   navigator.clipboard.writeText(text).then(() => {
@@ -701,69 +741,71 @@ document.querySelectorAll('.project-card, .contact-item, .skill-category').forEa
     this.style.transform = 'translateY(0)';
   });
 });
-
- /* --- HERO MINIMALISTA --- */
+/* ===== HERO MINIMALISTA FULL ===== */
 .hero.hero-min{
   position:relative;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:calc(70px + 40px) 24px 60px; /* espacio por la nav fija */
+  height:100vh;              /* ocupa TODA la pantalla */
+  width:100vw;
+  min-height:600px;
+  display:flex; align-items:center; justify-content:center;
+  padding:90px 24px 48px;    /* 90px por la navbar fija */
   overflow:hidden;
 }
 
 .hero-bg{
-  position:absolute; inset:0; z-index:-2;
+  position:absolute; inset:0; z-index:-3;
   background-size:cover; background-position:center;
-  opacity:0.9; filter:brightness(.75) saturate(.9);
-  transition:opacity 0.8s ease, background-image 0.8s ease;
-  will-change: transform, opacity;
+  opacity:.95; filter:brightness(.75) saturate(.9);
+  transition:background-image .8s ease, opacity .8s ease;
+  will-change:background-image, transform;
 }
 
 .hero-overlay{
-  position:absolute; inset:0; z-index:-1;
+  position:absolute; inset:0; z-index:-2;
   background:
-    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 100%),
-    linear-gradient(to bottom, rgba(11,15,22,.3) 0%, rgba(11,15,22,.65) 100%);
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.18) 0%, rgba(0,0,0,.65) 100%),
+    linear-gradient(to bottom, rgba(11,15,22,.15) 0%, rgba(11,15,22,.55) 100%);
+}
+
+/* Luz/Aro celeste que sigue al mouse */
+.hero-effect{
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  /* dos gradientes: halo suave + aro fino */
+  background:
+    radial-gradient(620px 620px at var(--lx,50%) var(--ly,50%),
+      rgba(56,189,248,.16), rgba(56,189,248,0) 60%),
+    radial-gradient(180px 180px at var(--lx,50%) var(--ly,50%),
+      transparent 58%, rgba(125,249,255,.9) 59%, rgba(125,249,255,.0) 64%);
+  mix-blend-mode:screen;
+  filter:blur(1.2px);
+  transition:background-position .08s linear;
 }
 
 .hero-center{
-  max-width:min(820px, 92vw);
-  text-align:center;
-  animation: fadeInUp .6s ease both;
+  position:relative; z-index:1; text-align:center;
+  max-width:min(900px,92vw);
+  animation:fadeInUp .6s ease both;
 }
 
 .hero-title{
-  margin:0 0 10px;
-  font-weight:900;
-  font-size:clamp(38px, 8vw, 68px);
-  line-height:1.05;
+  margin:0 0 10px; font-weight:900;
+  font-size:clamp(40px,7.2vw,72px); line-height:1.05;
 }
-
 .hero-sub{
-  margin:10px auto 22px;
-  color:var(--muted);
-  font-size:clamp(16px, 2.2vw, 20px);
-  max-width:780px;
+  margin:8px auto 22px; color:var(--muted);
+  font-size:clamp(16px,2.2vw,20px); max-width:780px;
 }
 
-.hero-chips{
-  display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
-  margin-bottom:26px;
-}
-.chip{
-  padding:6px 14px; border-radius:999px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);
-  font-size:13px; color:var(--fg);
+.hero-chips{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:26px}
+.chip{padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); font-size:13px}
+
+@media (max-width:768px){
+  .hero.hero-min{padding:82px 16px 40px}
 }
 
-/* Botón texto minimal */
-.btn-text{ color:var(--muted); text-decoration:none; font-weight:600; margin-left:4px }
-.btn-text:hover{ color:var(--fg) }
- 
-  
+  .hero-center{text-align:left;margin-left:min(6vw,60px)}
+.hero-chips{justify-content:flex-start}
+
 </script>
 
 

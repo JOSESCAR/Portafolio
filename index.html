@@ -21,7 +21,7 @@ body{
   overflow-x:hidden; line-height:1.6;
 }
 
-/* NAV - Más sutil */
+/* NAV */
 .nav{
   position:fixed; top:0; left:0; right:0; height:70px; z-index:100;
   background:rgba(11,15,22,.92); backdrop-filter:blur(12px);
@@ -54,7 +54,7 @@ body{
   padding:10px 20px; border-radius:8px; font-weight:500; 
   text-decoration:none; font-size:14px; transition:all .3s;
   border:1px solid var(--line); color:var(--fg);
-  background:transparent;
+  background:transparent; cursor:pointer;
 }
 .btn.primary{
   background:var(--glass); border-color:rgba(255,255,255,.15);
@@ -64,45 +64,72 @@ body{
   transform:translateY(-1px);
 }
 
-/* HERO - Estilo minimalista como Chris */
-.hero{
-  position:relative; min-height:100vh; display:flex; align-items:center;
-  padding:0 clamp(20px,5vw,40px); overflow:hidden;
+/* HERO MINIMALISTA FULL */
+.hero.hero-min{
+  position:relative;
+  height:100vh;
+  width:100vw;
+  min-height:600px;
+  display:flex; align-items:center; justify-content:center;
+  padding:90px 24px 48px;
+  overflow:hidden;
 }
 
 .hero-bg{
-  position:absolute; inset:0; z-index:-1;
-  background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop');
+  position:absolute; inset:0; z-index:-3;
   background-size:cover; background-position:center;
-  opacity:.4; filter:brightness(.7) saturate(.8);
-  transition:opacity 1s ease;
+  opacity:.95; filter:brightness(.75) saturate(.9);
+  transition:background-image .8s ease, opacity .8s ease;
+  will-change:background-image, transform;
 }
 
-.hero-container{
-  max-width:1100px; margin:0 auto; width:100%;
-  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+.hero-overlay{
+  position:absolute; inset:0; z-index:-2;
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.18) 0%, rgba(0,0,0,.65) 100%),
+    linear-gradient(to bottom, rgba(11,15,22,.15) 0%, rgba(11,15,22,.55) 100%);
 }
 
-.hero-content{max-width:500px}
-.hero-content h1{
-  font-size:clamp(36px,5vw,56px); font-weight:800; 
-  margin-bottom:16px; line-height:1.2;
-}
-.hero-subtitle{
-  color:var(--muted); font-size:clamp(16px,2vw,20px); 
-  margin-bottom:32px; font-weight:400; line-height:1.5;
-}
-
-.hero-badges{
-  display:flex; gap:12px; margin-bottom:32px; flex-wrap:wrap;
-}
-.badge{
-  padding:6px 14px; border-radius:20px; 
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-  font-size:13px; font-weight:500; color:var(--fg);
+/* Luz/Aro celeste que sigue al mouse */
+.hero-effect{
+  position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(620px 620px at var(--lx,50%) var(--ly,50%),
+      rgba(56,189,248,.16), rgba(56,189,248,0) 60%),
+    radial-gradient(180px 180px at var(--lx,50%) var(--ly,50%),
+      transparent 58%, rgba(125,249,255,.9) 59%, rgba(125,249,255,.0) 64%);
+  mix-blend-mode:screen;
+  filter:blur(1.2px);
+  transition:background-position .08s linear;
 }
 
-.hero-actions{display:flex; gap:16px; align-items:center}
+.hero-center{
+  position:relative; z-index:1; text-align:center;
+  max-width:min(900px,92vw);
+  animation:fadeInUp .6s ease both;
+}
+
+.hero-title{
+  margin:0 0 10px; font-weight:900;
+  font-size:clamp(40px,7.2vw,72px); line-height:1.05;
+}
+.hero-sub{
+  margin:8px auto 22px; color:var(--muted);
+  font-size:clamp(16px,2.2vw,20px); max-width:780px;
+}
+
+.hero-chips{
+  display:flex; gap:10px; justify-content:center; 
+  flex-wrap:wrap; margin-bottom:26px;
+}
+.chip{
+  padding:6px 14px; border-radius:999px; 
+  background:rgba(255,255,255,.08); 
+  border:1px solid rgba(255,255,255,.14); 
+  font-size:13px;
+}
+
+.hero-actions{display:flex; gap:16px; align-items:center; justify-content:center}
 .btn-text{
   color:var(--muted); text-decoration:none; font-weight:500;
   position:relative; transition:color .3s;
@@ -112,16 +139,6 @@ body{
   content:'→'; margin-left:6px; transition:transform .3s;
 }
 .btn-text:hover::after{transform:translateX(4px)}
-
-.hero-image{
-  position:relative; display:flex; justify-content:center;
-}
-.workspace-image{
-  width:100%; max-width:480px; border-radius:12px;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-  transition:transform .3s ease;
-}
-.workspace-image:hover{transform:scale(1.02)}
 
 /* SECCIONES */
 .section{
@@ -139,7 +156,7 @@ body{
   color:var(--muted); font-size:16px; max-width:600px;
 }
 
-/* EXPERIENCIA - Timeline limpia */
+/* EXPERIENCIA - Timeline */
 .timeline{position:relative; margin-top:40px}
 .timeline::before{
   content:""; position:absolute; left:0; top:0; bottom:0; 
@@ -170,7 +187,7 @@ body{
   color:var(--muted); line-height:1.6; font-size:15px;
 }
 
-/* HABILIDADES - Grid simple */
+/* HABILIDADES - Grid */
 .skills-grid{
   display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
   gap:40px; margin-top:40px;
@@ -200,7 +217,7 @@ body{
   color:var(--muted); font-size:14px; font-weight:500;
 }
 
-/* PROYECTOS - Cards minimalistas */
+/* PROYECTOS - Cards */
 .projects-grid{
   display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:24px; margin-top:40px;
@@ -225,7 +242,7 @@ body{
   color:var(--muted); line-height:1.6; font-size:14px;
 }
 
-/* CONTACTO - Simple y elegante */
+/* CONTACTO */
 .contact-grid{
   display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:20px; margin-top:40px;
@@ -246,6 +263,7 @@ body{
   background:rgba(255,255,255,.06); border-radius:8px; font-size:18px;
 }
 
+.contact-info{flex:1}
 .contact-info h4{
   font-weight:500; margin-bottom:2px; color:var(--fg); font-size:14px;
 }
@@ -276,7 +294,7 @@ body{
   background:rgba(30,41,59,.95); color:var(--fg); padding:12px 20px;
   border-radius:8px; border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(10px); opacity:0; pointer-events:none;
-  transition:all .3s ease; font-size:14px;
+  transition:all .3s ease; font-size:14px; z-index:1000;
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(-8px)}
 
@@ -289,15 +307,16 @@ body{
 /* RESPONSIVE */
 @media (max-width:768px){
   .nav-links{display:none}
-  .hero-container{grid-template-columns:1fr; gap:40px; text-align:center}
-  .hero-image{order:-1}
-  .workspace-image{max-width:300px}
+  .hero-center{text-align:center}
+  .hero-chips{justify-content:center}
+  .hero-actions{flex-direction:column; gap:12px}
   .skills-grid{grid-template-columns:1fr}
   .projects-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
   .timeline::before{display:none}
   .timeline-item{padding-left:0}
   .timeline-item::before{display:none}
+  .hero.hero-min{padding:82px 16px 40px}
 }
 
 /* Estados de carga suave */
@@ -345,10 +364,11 @@ body{
 
     <div class="hero-actions">
       <a href="#proyectos" class="btn primary">Ver mi trabajo</a>
-      <a href="#contacto" class="btn-text">Contactar →</a>
+      <a href="#contacto" class="btn-text">Contactar</a>
     </div>
   </div>
 </section>
+
 <!-- EXPERIENCIA -->
 <section class="section" id="experiencia">
   <div class="section-header">
@@ -659,38 +679,44 @@ document.addEventListener('DOMContentLoaded', function() {
   }, { threshold: 0.1 });
   
   fadeElements.forEach(el => fadeObserver.observe(el));
-  
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const heroBg = document.getElementById('heroBg');   // <div class="hero-bg" id="heroBg">
-  const hero    = document.getElementById('inicio');  // <section id="inicio">…</section>
-  const fx      = document.getElementById('heroFx');  // <div class="hero-effect" id="heroFx">
 
-  // Si no existen, no seguimos (evita errores en consola)
+  // --- EFECTOS HERO ---
+  const heroBg = document.getElementById('heroBg');
+  const hero = document.getElementById('inicio');
+  const fx = document.getElementById('heroFx');
+
   if (!hero || !heroBg) return;
 
-  // --- Cambio dinámico de fondo (cada 10s)
+  // Cambio dinámico de fondo (cada 10s) - Data Science themed
   const backgrounds = [
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1920&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop', // Original code/laptop
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop', // Data visualization charts
+    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=1920&auto=format&fit=crop', // MacBook with Python code
+    'https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=1920&auto=format&fit=crop', // Data analysis graphs
+    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1920&auto=format&fit=crop', // Multiple monitors with code
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop', // Business analytics dashboard
+    'https://images.unsplash.com/photo-1509475826633-fed577a2c71b?q=80&w=1920&auto=format&fit=crop', // Statistics and charts
+    'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1920&auto=format&fit=crop', // Programming workspace
+    'https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1920&auto=format&fit=crop', // Data center/servers
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1920&auto=format&fit=crop'  // Code on dark theme
   ];
   let currentBg = 0;
-  heroBg.style.backgroundImage = `url('${backgrounds[0]}')`; // fondo inicial
+  heroBg.style.backgroundImage = `url('${backgrounds[0]}')`;
+  
   setInterval(() => {
     currentBg = (currentBg + 1) % backgrounds.length;
     heroBg.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
   }, 10000);
 
-  // --- Parallax sutil con el scroll
+  // Parallax sutil con el scroll
   const onScroll = () => {
     const y = window.scrollY || 0;
     heroBg.style.transform = `translateY(${y * 0.12}px) scale(1.06)`;
   };
-  onScroll(); // aplicar al cargar
+  onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // --- Luz/aro celeste (si existe el div heroFx)
+  // Luz/aro celeste (si existe el div heroFx)
   if (fx) {
     let autoT = 0, followMouse = false;
 
@@ -709,7 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
     (function animate() {
       if (!followMouse) {
         const r = hero.getBoundingClientRect();
-        // trayectoria en “8”
+        // trayectoria en "8"
         const cx = r.width / 2 + Math.cos(autoT * 0.9) * r.width * 0.25;
         const cy = r.height / 2 + Math.sin(autoT * 1.2) * r.height * 0.18;
         setLight(cx, cy);
@@ -719,6 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
   }
 });
+
 // Función para copiar texto
 function copyText(text) {
   navigator.clipboard.writeText(text).then(() => {
@@ -746,74 +773,3 @@ document.querySelectorAll('.project-card, .contact-item, .skill-category').forEa
     this.style.transform = 'translateY(0)';
   });
 });
-/* ===== HERO MINIMALISTA FULL ===== */
-.hero.hero-min{
-  position:relative;
-  height:100vh;              /* ocupa TODA la pantalla */
-  width:100vw;
-  min-height:600px;
-  display:flex; align-items:center; justify-content:center;
-  padding:90px 24px 48px;    /* 90px por la navbar fija */
-  overflow:hidden;
-}
-
-.hero-bg{
-  position:absolute; inset:0; z-index:-3;
-  background-size:cover; background-position:center;
-  opacity:.95; filter:brightness(.75) saturate(.9);
-  transition:background-image .8s ease, opacity .8s ease;
-  will-change:background-image, transform;
-}
-
-.hero-overlay{
-  position:absolute; inset:0; z-index:-2;
-  background:
-    radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,.18) 0%, rgba(0,0,0,.65) 100%),
-    linear-gradient(to bottom, rgba(11,15,22,.15) 0%, rgba(11,15,22,.55) 100%);
-}
-
-/* Luz/Aro celeste que sigue al mouse */
-.hero-effect{
-  position:absolute; inset:0; z-index:-1; pointer-events:none;
-  /* dos gradientes: halo suave + aro fino */
-  background:
-    radial-gradient(620px 620px at var(--lx,50%) var(--ly,50%),
-      rgba(56,189,248,.16), rgba(56,189,248,0) 60%),
-    radial-gradient(180px 180px at var(--lx,50%) var(--ly,50%),
-      transparent 58%, rgba(125,249,255,.9) 59%, rgba(125,249,255,.0) 64%);
-  mix-blend-mode:screen;
-  filter:blur(1.2px);
-  transition:background-position .08s linear;
-}
-
-.hero-center{
-  position:relative; z-index:1; text-align:center;
-  max-width:min(900px,92vw);
-  animation:fadeInUp .6s ease both;
-}
-
-.hero-title{
-  margin:0 0 10px; font-weight:900;
-  font-size:clamp(40px,7.2vw,72px); line-height:1.05;
-}
-.hero-sub{
-  margin:8px auto 22px; color:var(--muted);
-  font-size:clamp(16px,2.2vw,20px); max-width:780px;
-}
-
-.hero-chips{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:26px}
-.chip{padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); font-size:13px}
-
-@media (max-width:768px){
-  .hero.hero-min{padding:82px 16px 40px}
-}
-
-  .hero-center{text-align:left;margin-left:min(6vw,60px)}
-.hero-chips{justify-content:flex-start}
-
-</script>
-
-
-</body>
-</html>
-

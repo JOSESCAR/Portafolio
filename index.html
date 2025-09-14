@@ -65,19 +65,29 @@ body{
 }
 
 /* HERO - Layout alineado a la izquierda sin imagen */
-.hero{
-  position:relative; min-height:100vh; display:flex; align-items:center;
-  padding:0 clamp(20px,5vw,40px); overflow:hidden;
+.hero-left{
+  position:relative;
+  height:100vh;
+  min-height:640px;
+  width:100%;
+  display:flex;
+  align-items:flex-start;
+  padding:110px 40px 40px; /* deja espacio para la nav fija */
+  overflow:hidden;
 }
 
 .hero-bg{
-  position:absolute; inset:0; z-index:-1;
-  background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920&auto=format&fit=crop');
+  position:absolute; inset:0; z-index:-4;
   background-size:cover; background-position:center;
-  opacity:.4; filter:brightness(.7) saturate(.8);
-  transition:background-image .8s ease, opacity .8s ease;
+  transition:background-image .9s ease, transform .6s ease;
+  filter:brightness(.7) saturate(.9);
+  will-change: background-image, transform;
 }
-
+.hero-overlay{
+  position:absolute; inset:0; z-index:-3;
+  background: linear-gradient(180deg, rgba(11,15,22,.25) 0%, rgba(11,15,22,.65) 100%);
+  pointer-events:none;
+}
 .hero-container{
   max-width:1100px; margin:0 auto; width:100%;
   display:flex; justify-content:flex-start; align-items:center;
@@ -597,6 +607,7 @@ body{
 <!-- TOAST -->
 <div class="toast" id="toast">Copiado al portapapeles ✓</div>
 
+  
 <script>
 // Variables globales
 const navbar = document.getElementById('navbar');

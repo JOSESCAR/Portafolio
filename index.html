@@ -64,7 +64,7 @@ body{
   transform:translateY(-1px);
 }
 
-/* HERO - Estilo minimalista como Chris */
+/* HERO - Layout alineado a la izquierda sin imagen */
 .hero{
   position:relative; min-height:100vh; display:flex; align-items:center;
   padding:0 clamp(20px,5vw,40px); overflow:hidden;
@@ -80,48 +80,42 @@ body{
 
 .hero-container{
   max-width:1100px; margin:0 auto; width:100%;
-  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  display:flex; justify-content:flex-start; align-items:center;
+  min-height:calc(100vh - 140px);
 }
 
-.hero-content{max-width:500px}
+.hero-content{
+  max-width:650px; 
+}
 .hero-content h1{
-  font-size:clamp(36px,5vw,56px); font-weight:800; 
-  margin-bottom:16px; line-height:1.2;
+  font-size:clamp(42px,6vw,72px); font-weight:800; 
+  margin-bottom:20px; line-height:1.1;
 }
 .hero-subtitle{
-  color:var(--muted); font-size:clamp(16px,2vw,20px); 
-  margin-bottom:32px; font-weight:400; line-height:1.5;
+  color:var(--muted); font-size:clamp(18px,2.5vw,24px); 
+  margin-bottom:40px; font-weight:400; line-height:1.5;
+  max-width:550px;
 }
 
 .hero-badges{
-  display:flex; gap:12px; margin-bottom:32px; flex-wrap:wrap;
+  display:flex; gap:12px; margin-bottom:40px; flex-wrap:wrap;
 }
 .badge{
-  padding:6px 14px; border-radius:20px; 
+  padding:8px 16px; border-radius:20px; 
   background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-  font-size:13px; font-weight:500; color:var(--fg);
+  font-size:14px; font-weight:500; color:var(--fg);
 }
 
-.hero-actions{display:flex; gap:16px; align-items:center}
+.hero-actions{display:flex; gap:20px; align-items:center; flex-wrap:wrap}
 .btn-text{
   color:var(--muted); text-decoration:none; font-weight:500;
-  position:relative; transition:color .3s;
+  position:relative; transition:color .3s; font-size:16px;
 }
 .btn-text:hover{color:var(--fg)}
 .btn-text::after{
-  content:'→'; margin-left:6px; transition:transform .3s;
+  content:'→'; margin-left:8px; transition:transform .3s;
 }
 .btn-text:hover::after{transform:translateX(4px)}
-
-.hero-image{
-  position:relative; display:flex; justify-content:center;
-}
-.workspace-image{
-  width:100%; max-width:480px; border-radius:12px;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-  transition:transform .3s ease;
-}
-.workspace-image:hover{transform:scale(1.02)}
 
 /* SECCIONES */
 .section{
@@ -289,9 +283,8 @@ body{
 /* RESPONSIVE */
 @media (max-width:768px){
   .nav-links{display:none}
-  .hero-container{grid-template-columns:1fr; gap:40px; text-align:center}
-  .hero-image{order:-1}
-  .workspace-image{max-width:300px}
+  .hero-container{justify-content:center; text-align:center}
+  .hero-content{max-width:100%}
   .skills-grid{grid-template-columns:1fr}
   .projects-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
@@ -333,24 +326,19 @@ body{
     <div class="hero-content">
       <h1>Hola, soy Jose.</h1>
       <p class="hero-subtitle">
-        Estudiante de Ingeniería en Estadística. Me apasiona convertir datos en insights valiosos.
+        Estudiante de Ingeniería en Estadística. Me apasiona convertir datos en insights valiosos para generar impacto real.
       </p>
       
       <div class="hero-badges">
         <span class="badge">Estadística</span>
         <span class="badge">Quito, Ecuador</span>
+        <span class="badge">Data Science</span>
       </div>
       
       <div class="hero-actions">
         <a href="#proyectos" class="btn primary">Ver mi trabajo</a>
         <a href="#contacto" class="btn-text">Contactar</a>
       </div>
-    </div>
-    
-    <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" 
-           alt="Data Analysis Workspace" 
-           class="workspace-image">
     </div>
   </div>
 </section>
@@ -680,4 +668,45 @@ document.addEventListener('DOMContentLoaded', function() {
       'https://images.unsplash.com/photo-1509475826633-fed577a2c71b?q=80&w=1920&auto=format&fit=crop', // Statistics and charts
       'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1920&auto=format&fit=crop', // Programming workspace
       'https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1920&auto=format&fit=crop', // Data center/servers
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f
+    ];
+    
+    let currentBgIndex = 0;
+    
+    function changeBg() {
+      currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+      heroBg.style.backgroundImage = `url('${backgrounds[currentBgIndex]}')`;
+    }
+    
+    // Cambiar fondo cada 10 segundos
+    setInterval(changeBg, 10000);
+  }
+});
+
+// Función para copiar texto
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copiado al portapapeles ✓');
+  }).catch(() => {
+    // Fallback para navegadores que no soportan clipboard API
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showToast('Copiado al portapapeles ✓');
+    } catch (err) {
+      showToast('Error al copiar');
+    }
+    document.body.removeChild(textArea);
+  });
+}
+
+// Función para mostrar toast
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2000);
+}

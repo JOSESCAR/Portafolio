@@ -115,6 +115,9 @@ body{
   background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
   font-size:14px; font-weight:500; color:var(--fg);
 }
+.badge.gold{
+  background:rgba(255,209,102,.1); border-color:rgba(255,209,102,.3); color:var(--gold);
+}
 
 .hero-actions{display:flex; gap:20px; align-items:center; flex-wrap:wrap}
 .btn-text{
@@ -143,6 +146,43 @@ body{
   color:var(--muted); font-size:16px; max-width:600px;
 }
 
+/* LOGROS - Cards destacadas */
+.achievement-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:24px; margin-top:40px;
+}
+.achievement-card{
+  display:flex; gap:20px; align-items:flex-start;
+  background:rgba(255,209,102,.05); border:1px solid rgba(255,209,102,.22);
+  border-radius:12px; padding:28px; transition:all .3s ease;
+}
+.achievement-card:hover{
+  border-color:rgba(255,209,102,.45);
+  box-shadow:var(--shadow-soft);
+  transform:translateY(-2px);
+}
+.achievement-icon{
+  font-size:26px; width:52px; height:52px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,209,102,.12); border-radius:10px;
+}
+.achievement-body{flex:1}
+.achievement-date{
+  color:var(--gold); font-size:12px; font-weight:600; margin-bottom:6px;
+  text-transform:uppercase; letter-spacing:.04em;
+}
+.achievement-body h3{
+  font-size:17px; font-weight:600; margin-bottom:8px; color:var(--fg);
+}
+.achievement-body p{
+  color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:10px;
+}
+.card-link{
+  color:var(--accent); text-decoration:none; font-size:14px; font-weight:500;
+  display:inline-block;
+}
+.card-link:hover{text-decoration:underline}
+
 /* EXPERIENCIA - Timeline limpia */
 .timeline{position:relative; margin-top:40px}
 .timeline::before{
@@ -158,6 +198,7 @@ body{
 .timeline-item:nth-child(2){animation-delay:.2s}
 .timeline-item:nth-child(3){animation-delay:.3s}
 .timeline-item:nth-child(4){animation-delay:.4s}
+.timeline-item:nth-child(5){animation-delay:.5s}
 
 .timeline-item::before{
   content:""; position:absolute; left:-4px; top:8px;
@@ -169,6 +210,14 @@ body{
 }
 .timeline-title{
   font-size:18px; font-weight:600; margin-bottom:8px; color:var(--fg);
+}
+.timeline-title a, .project-card h3 a{
+  color:inherit; text-decoration:none; transition:color .3s;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat:no-repeat; background-position:0 100%; background-size:0% 1px;
+}
+.timeline-title a:hover, .project-card h3 a:hover{
+  color:var(--accent); background-size:100% 1px;
 }
 .timeline-description{
   color:var(--muted); line-height:1.6; font-size:15px;
@@ -303,6 +352,7 @@ body{
   .skills-grid{grid-template-columns:1fr}
   .projects-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
+  .achievement-grid{grid-template-columns:1fr}
   .timeline::before{display:none}
   .timeline-item{padding-left:0}
   .timeline-item::before{display:none}
@@ -325,6 +375,7 @@ body{
       <a href="#inicio" class="logo">Jose Gallegos</a>
       <ul class="nav-links">
         <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+        <li><a href="#logros" class="nav-link">Logros</a></li>
         <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
         <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
         <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
@@ -351,11 +402,48 @@ body{
         <span class="badge">Estadística</span>
         <span class="badge">Quito, Ecuador</span>
         <span class="badge">Data Science</span>
+        <span class="badge gold">🏆 Premiado 2026</span>
       </div>
       
       <div class="hero-actions">
         <a href="#proyectos" class="btn primary">Ver mi trabajo</a>
         <a href="#contacto" class="btn-text">Contactar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGROS -->
+<section class="section section-minimal" id="logros">
+  <div class="section-header">
+    <h2>Logros y Reconocimientos</h2>
+    <p>Reconocimientos recientes que reflejan mi compromiso con la investigación aplicada</p>
+  </div>
+
+  <div class="achievement-grid">
+    <div class="achievement-card">
+      <div class="achievement-icon">🏆</div>
+      <div class="achievement-body">
+        <div class="achievement-date">Junio 2026 · ESPOCH</div>
+        <h3>1er Lugar · Concurso de Pósters</h3>
+        <p>
+          Ganador del Primer Lugar en el Concurso Académico de Estadística Aplicada (III Edición),
+          Facultad de Ciencias – ESPOCH, con un póster sobre modelos de regresión logística y redes
+          neuronales para la predicción de incidencia delictiva.
+        </p>
+      </div>
+    </div>
+
+    <div class="achievement-card">
+      <div class="achievement-icon">🌎</div>
+      <div class="achievement-body">
+        <div class="achievement-date">Julio 2026 · Santiago, Chile</div>
+        <h3>Selección entre los mejores trabajos · LACCEI 2026</h3>
+        <p>
+          Paper estudiantil elegido entre más de 3,000 trabajos presentados en la 24ª LACCEI International
+          Multi-Conference for Engineering, Education and Technology.
+        </p>
+        <a href="https://laccei.org/laccei2026/" target="_blank" rel="noopener" class="card-link">Ver conferencia →</a>
       </div>
     </div>
   </div>
@@ -369,6 +457,17 @@ body{
   </div>
   
   <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-period">2026 · Lima, Perú</div>
+      <h3 class="timeline-title"><a href="https://sites.google.com/view/congreso-estadistica-2026" target="_blank" rel="noopener">Ponente Internacional · II Congreso de Estadística y Ciencia de Datos (UNALM)</a></h3>
+      <p class="timeline-description">
+        Primera ponencia internacional. Trabajo aceptado en modalidad Comunicación: "Modelos de Regresión
+        Logística y Redes Neuronales para la Predicción de Incidencia Delictiva: Región Interandina – Ecuador",
+        presentado en la Universidad Nacional Agraria La Molina. Publicado posteriormente en la
+        <a href="https://doi.org/10.31876/rcs.v32i2.45585" target="_blank" rel="noopener">Revista de Ciencias Sociales (Q2)</a>.
+      </p>
+    </div>
+
     <div class="timeline-item">
       <div class="timeline-period">2024 – Presente</div>
       <h3 class="timeline-title">Investigador Universitario · Proyecto Independiente</h3>
@@ -496,13 +595,24 @@ body{
         con storytelling de datos y automatización de reportes.
       </p>
     </div>
-    
+
     <div class="project-card">
-      <h3>Publicación Académica</h3>
-      <p class="tech">R · Quarto · Estadística</p>
+      <h3><a href="https://doi.org/10.31876/rcs.v32i2.45585" target="_blank" rel="noopener">Predicción de Incidencia Delictiva — Región Interandina</a></h3>
+      <p class="tech">Regresión Logística · Redes Neuronales · Revista Q2</p>
       <p>
-        Artículo sobre diseño experimental y análisis estadístico avanzado
-        con aplicaciones en investigación social.
+        Publicado en la Revista de Ciencias Sociales (32(2), 429-446), revista indexada Q2. Comparación
+        de modelos de regresión logística y redes neuronales para la predicción de criminalidad en la
+        región interandina de Ecuador. Presentado también como ponencia en el II Congreso de Estadística
+        y Ciencia de Datos (UNALM, Perú).
+      </p>
+    </div>
+
+    <div class="project-card">
+      <h3><a href="https://laccei.org/laccei2026/" target="_blank" rel="noopener">Paper Estudiantil — LACCEI 2026</a></h3>
+      <p class="tech">Machine Learning · Salud Pública</p>
+      <p>
+        Score de riesgo de cáncer cervical reproducible basado en XGBoost, seleccionado entre los
+        mejores trabajos estudiantiles de más de 3,000 presentados en la 24ª Conferencia LACCEI.
       </p>
     </div>
     
@@ -601,7 +711,7 @@ body{
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>&copy; 2025 Jose Gallegos. Diseñado con simplicidad y propósito.</p>
+  <p>&copy; 2026 Jose Gallegos. Diseñado con simplicidad y propósito.</p>
 </footer>
 
 <!-- TOAST -->
@@ -729,3 +839,6 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 2000);
 }
+</script>
+</body>
+</html>
